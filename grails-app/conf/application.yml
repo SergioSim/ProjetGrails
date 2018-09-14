@@ -128,5 +128,5 @@ environments:
                 defaultTransactionIsolation: 2 # TRANSACTION_READ_COMMITTED
 
 server :
-    port: 8080
-    context-path: '/projetGrail'
+    port: 8090
+    context-path: '/projetGrails'
