@@ -11,7 +11,7 @@ buildscript {
 }
 
 version "0.1"
-group "tp1"
+group "projetGrails1"
 
 apply plugin:"eclipse"
 apply plugin:"idea"
@@ -26,6 +26,7 @@ repositories {
 }
 
 dependencies {
+    compile 'org.grails.plugins:spring-security-core:3.2.3'
     compile "org.springframework.boot:spring-boot-starter-logging"
     compile "org.springframework.boot:spring-boot-autoconfigure"
     compile "org.grails:grails-core"
@@ -58,9 +59,6 @@ dependencies {
     testRuntime "org.seleniumhq.selenium:selenium-chrome-driver:2.47.1"
     testRuntime "org.seleniumhq.selenium:selenium-htmlunit-driver:2.47.1"
     testRuntime "net.sourceforge.htmlunit:htmlunit:2.18"
-
-    compile 'org.grails.plugins:spring-security-core:3.2.3'
-
 }
 
 bootRun {

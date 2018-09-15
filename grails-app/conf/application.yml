@@ -2,7 +2,7 @@
 grails:
     profile: web
     codegen:
-        defaultPackage: tp1
+        defaultPackage: mbds
     gorm:
         reactor:
             # Whether to translate GORM events into Reactor events
@@ -10,9 +10,9 @@ grails:
             events: false
 info:
     app:
-        name: '@info.app.name@'
-        version: '@info.app.version@'
-        grailsVersion: '@info.app.grailsVersion@'
+        name: 'mbds.mbds.playerManagement'
+        version: '0.0.1'
+        grailsVersion: '3.3.8'
 spring:
     main:
         banner-mode: "off"
@@ -129,4 +129,4 @@ environments:
 
 server :
     port: 8090
-    context-path: '/projetGrails'
+    contextPath: '/mbds'
