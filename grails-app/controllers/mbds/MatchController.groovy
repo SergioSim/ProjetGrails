@@ -19,10 +19,10 @@ class MatchController {
     }
 
     def create() {
-        respond new Match(params)
+        respond new DeadMatch(params)
     }
 
-    def save(Match match) {
+    def save(DeadMatch match) {
         if (match == null) {
             notFound()
             return
@@ -37,7 +37,7 @@ class MatchController {
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.created.message', args: [message(code: 'match.label', default: 'Match'), match.id])
+                flash.message = message(code: 'default.created.message', args: [message(code: 'match.label', default: 'DeadMatch'), match.id])
                 redirect match
             }
             '*' { respond match, [status: CREATED] }
@@ -48,7 +48,7 @@ class MatchController {
         respond matchService.get(id)
     }
 
-    def update(Match match) {
+    def update(DeadMatch match) {
         if (match == null) {
             notFound()
             return
@@ -63,7 +63,7 @@ class MatchController {
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'match.label', default: 'Match'), match.id])
+                flash.message = message(code: 'default.updated.message', args: [message(code: 'match.label', default: 'DeadMatch'), match.id])
                 redirect match
             }
             '*'{ respond match, [status: OK] }
@@ -80,7 +80,7 @@ class MatchController {
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.deleted.message', args: [message(code: 'match.label', default: 'Match'), id])
+                flash.message = message(code: 'default.deleted.message', args: [message(code: 'match.label', default: 'DeadMatch'), id])
                 redirect action:"index", method:"GET"
             }
             '*'{ render status: NO_CONTENT }
@@ -90,7 +90,7 @@ class MatchController {
     protected void notFound() {
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.not.found.message', args: [message(code: 'match.label', default: 'Match'), params.id])
+                flash.message = message(code: 'default.not.found.message', args: [message(code: 'match.label', default: 'DeadMatch'), params.id])
                 redirect action: "index", method: "GET"
             }
             '*'{ render status: NOT_FOUND }

@@ -7,18 +7,18 @@ import org.hibernate.SessionFactory
 
 @Integration
 @Rollback
-class MatchServiceSpec extends Specification {
+class DeadMatchServiceSpec extends Specification {
 
     MatchService matchService
     SessionFactory sessionFactory
 
     private Long setupData() {
         // TODO: Populate valid domain instances and return a valid ID
-        //new Match(...).save(flush: true, failOnError: true)
-        //new Match(...).save(flush: true, failOnError: true)
-        //Match match = new Match(...).save(flush: true, failOnError: true)
-        //new Match(...).save(flush: true, failOnError: true)
-        //new Match(...).save(flush: true, failOnError: true)
+        //new DeadMatch(...).save(flush: true, failOnError: true)
+        //new DeadMatch(...).save(flush: true, failOnError: true)
+        //DeadMatch match = new DeadMatch(...).save(flush: true, failOnError: true)
+        //new DeadMatch(...).save(flush: true, failOnError: true)
+        //new DeadMatch(...).save(flush: true, failOnError: true)
         assert false, "TODO: Provide a setupData() implementation for this generated test suite"
         //match.id
     }
@@ -34,7 +34,7 @@ class MatchServiceSpec extends Specification {
         setupData()
 
         when:
-        List<Match> matchList = matchService.list(max: 2, offset: 2)
+        List<DeadMatch> matchList = matchService.list(max: 2, offset: 2)
 
         then:
         matchList.size() == 2
@@ -65,7 +65,7 @@ class MatchServiceSpec extends Specification {
     void "test save"() {
         when:
         assert false, "TODO: Provide a valid instance to save"
-        Match match = new Match()
+        DeadMatch match = new DeadMatch()
         matchService.save(match)
 
         then:

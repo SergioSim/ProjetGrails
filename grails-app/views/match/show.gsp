@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta name="layout" content="main" />
-        <g:set var="entityName" value="${message(code: 'match.label', default: 'Match')}" />
+        <g:set var="entityName" value="${message(code: 'match.label', default: 'DeadMatch')}" />
         <title><g:message code="default.show.label" args="[entityName]" /></title>
     </head>
     <body>

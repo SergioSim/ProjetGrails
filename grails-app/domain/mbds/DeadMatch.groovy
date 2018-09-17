@@ -1,13 +1,12 @@
 package mbds
 
-class Match {
+class DeadMatch {
 
     User winner
-    int winnerScore
     User looser
+    int winnerScore
     int looserScore
     Date dateCreated
-
 
     static constraints = {
     }

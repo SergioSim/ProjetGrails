@@ -5,7 +5,7 @@ import grails.testing.web.controllers.ControllerUnitTest
 import grails.validation.ValidationException
 import spock.lang.*
 
-class MatchControllerSpec extends Specification implements ControllerUnitTest<MatchController>, DomainUnitTest<Match> {
+class DeadMatchControllerSpec extends Specification implements ControllerUnitTest<MatchController>, DomainUnitTest<DeadMatch> {
 
     def populateValidParams(params) {
         assert params != null
@@ -52,7 +52,7 @@ class MatchControllerSpec extends Specification implements ControllerUnitTest<Ma
     void "Test the save action correctly persists"() {
         given:
         controller.matchService = Mock(MatchService) {
-            1 * save(_ as Match)
+            1 * save(_ as DeadMatch)
         }
 
         when:"The save action is executed with a valid instance"
@@ -60,7 +60,7 @@ class MatchControllerSpec extends Specification implements ControllerUnitTest<Ma
         request.contentType = FORM_CONTENT_TYPE
         request.method = 'POST'
         populateValidParams(params)
-        def match = new Match(params)
+        def match = new DeadMatch(params)
         match.id = 1
 
         controller.save(match)
@@ -73,7 +73,7 @@ class MatchControllerSpec extends Specification implements ControllerUnitTest<Ma
     void "Test the save action with an invalid instance"() {
         given:
         controller.matchService = Mock(MatchService) {
-            1 * save(_ as Match) >> { Match match ->
+            1 * save(_ as DeadMatch) >> { DeadMatch match ->
                 throw new ValidationException("Invalid instance", match.errors)
             }
         }
@@ -81,7 +81,7 @@ class MatchControllerSpec extends Specification implements ControllerUnitTest<Ma
         when:"The save action is executed with an invalid instance"
         request.contentType = FORM_CONTENT_TYPE
         request.method = 'POST'
-        def match = new Match()
+        def match = new DeadMatch()
         controller.save(match)
 
         then:"The create view is rendered again with the correct model"
@@ -105,14 +105,14 @@ class MatchControllerSpec extends Specification implements ControllerUnitTest<Ma
     void "Test the show action with a valid id"() {
         given:
         controller.matchService = Mock(MatchService) {
-            1 * get(2) >> new Match()
+            1 * get(2) >> new DeadMatch()
         }
 
         when:"A domain instance is passed to the show action"
         controller.show(2)
 
         then:"A model is populated containing the domain instance"
-        model.match instanceof Match
+        model.match instanceof DeadMatch
     }
 
     void "Test the edit action with a null id"() {
@@ -131,14 +131,14 @@ class MatchControllerSpec extends Specification implements ControllerUnitTest<Ma
     void "Test the edit action with a valid id"() {
         given:
         controller.matchService = Mock(MatchService) {
-            1 * get(2) >> new Match()
+            1 * get(2) >> new DeadMatch()
         }
 
         when:"A domain instance is passed to the show action"
         controller.edit(2)
 
         then:"A model is populated containing the domain instance"
-        model.match instanceof Match
+        model.match instanceof DeadMatch
     }
 
 
@@ -156,7 +156,7 @@ class MatchControllerSpec extends Specification implements ControllerUnitTest<Ma
     void "Test the update action correctly persists"() {
         given:
         controller.matchService = Mock(MatchService) {
-            1 * save(_ as Match)
+            1 * save(_ as DeadMatch)
         }
 
         when:"The save action is executed with a valid instance"
@@ -164,7 +164,7 @@ class MatchControllerSpec extends Specification implements ControllerUnitTest<Ma
         request.contentType = FORM_CONTENT_TYPE
         request.method = 'PUT'
         populateValidParams(params)
-        def match = new Match(params)
+        def match = new DeadMatch(params)
         match.id = 1
 
         controller.update(match)
@@ -177,7 +177,7 @@ class MatchControllerSpec extends Specification implements ControllerUnitTest<Ma
     void "Test the update action with an invalid instance"() {
         given:
         controller.matchService = Mock(MatchService) {
-            1 * save(_ as Match) >> { Match match ->
+            1 * save(_ as DeadMatch) >> { DeadMatch match ->
                 throw new ValidationException("Invalid instance", match.errors)
             }
         }
@@ -185,7 +185,7 @@ class MatchControllerSpec extends Specification implements ControllerUnitTest<Ma
         when:"The save action is executed with an invalid instance"
         request.contentType = FORM_CONTENT_TYPE
         request.method = 'PUT'
-        controller.update(new Match())
+        controller.update(new DeadMatch())
 
         then:"The edit view is rendered again with the correct model"
         model.match != null
