@@ -7,9 +7,15 @@ class UserHomeController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
-    @Secured(['ROLE_USER'])
+    @Secured(['ROLE_USER', 'ROLE_ADMIN'])
     def index() {
         String currentUserName = SecurityContextHolder.getContext().getAuthentication().getName()
-        render( view: 'index', model: [theUser: currentUserName])
+        String role = SecurityContextHolder.getContext().getAuthentication().getAuthorities().first()
+        if(role == 'ROLE_USER'){
+            render( view: 'index', model: [theUser: currentUserName, theRole: role])
+        }else if(role == 'ROLE_ADMIN'){
+            render( view: 'admin', model: [theUser: currentUserName, theRole: role])
+        }
+
     }
 }
