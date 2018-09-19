@@ -28,6 +28,7 @@
             <g:form class="buttons" controller="Usercontroller" action="fupload" method="POST" enctype="multipart/form-data" useToken="false">
                 Upload photo <input id="files" type="file" name="myFile" multiple />
             </g:form>
+            <f:table collection= "${pointOfInterestList}" properties="['name']"/>
 
             <g:form resource="${this.user}" method="POST">
                 <fieldset class="form">
