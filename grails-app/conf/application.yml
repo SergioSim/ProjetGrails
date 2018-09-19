@@ -102,6 +102,7 @@ environments:
         dataSource:
             dbCreate: create
             url: jdbc:mysql://82.255.166.104/GrailsUser?user=GrailsUser&password=GrailsPassword13?
+
     test:
         dataSource:
             dbCreate: update
