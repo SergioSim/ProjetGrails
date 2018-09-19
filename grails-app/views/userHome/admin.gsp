@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="layout" content="aAdmin" />
     <title>Hello ${theUser}</title>
 </head>
 <body>
@@ -9,6 +10,18 @@
 <p> your role is : ${theUser} - yes you are THE ONE</p>
 <p>Your images : ...</p>
 <p>Upload image : ...</p>
+<g:set var="now">
+    Some re-usable code on: ${new Date()}
+</g:set>
+<p>${now}</p>
+
+
+<g:if test="${thePage == ''}">
+    <h1>hello</h1>
+</g:if>
+<g:else>
+    <g:include controller="${thePage}" action="index" />
+</g:else>
 <g:link controller="logout">grails.plugin.springsecurity.LogoutController</g:link>
 </body>
 </html>

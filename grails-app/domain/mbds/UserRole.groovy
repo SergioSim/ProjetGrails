@@ -49,9 +49,9 @@ class UserRole implements Serializable {
 		}
 	}
 
-	static UserRole create(User user, Role role, boolean flush = false) {
+	static UserRole create(User user, Role role, boolean flush = true) {
 		def instance = new UserRole(user: user, role: role)
-		instance.save(flush: flush)
+		instance.save(flush: flush, failOnError: true)
 		instance
 	}
 

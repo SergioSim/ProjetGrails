@@ -18,7 +18,12 @@
             <g:if test="${flash.message}">
                 <div class="message" role="status">${flash.message}</div>
             </g:if>
-            <f:table collection="${userRoleList}" />
+            <p>this is ${userRoleList.toString()}</p>
+            <%
+                println "hello"
+                println userRoleList.toString()
+            %>
+            <f:table collection="${userRoleList}" properties="['User', 'Role']"/>
 
             <div class="pagination">
                 <g:paginate total="${userRoleCount ?: 0}" />

@@ -5,7 +5,7 @@ import grails.testing.web.controllers.ControllerUnitTest
 import grails.validation.ValidationException
 import spock.lang.*
 
-class DeadMatchControllerSpec extends Specification implements ControllerUnitTest<MatchController>, DomainUnitTest<DeadMatch> {
+class DeadMatchControllerSpec extends Specification implements ControllerUnitTest<DeadMatchController>, DomainUnitTest<DeadMatch> {
 
     def populateValidParams(params) {
         assert params != null
@@ -17,7 +17,7 @@ class DeadMatchControllerSpec extends Specification implements ControllerUnitTes
 
     void "Test the index action returns the correct model"() {
         given:
-        controller.matchService = Mock(MatchService) {
+        controller.deadMatchService = Mock(DeadMatchService) {
             1 * list(_) >> []
             1 * count() >> 0
         }
@@ -45,13 +45,13 @@ class DeadMatchControllerSpec extends Specification implements ControllerUnitTes
         controller.save(null)
 
         then:"A 404 error is returned"
-        response.redirectedUrl == '/match/index'
+        response.redirectedUrl == '/deadMatch/index'
         flash.message != null
     }
 
     void "Test the save action correctly persists"() {
         given:
-        controller.matchService = Mock(MatchService) {
+        controller.deadMatchService = Mock(DeadMatchService) {
             1 * save(_ as DeadMatch)
         }
 
@@ -66,13 +66,13 @@ class DeadMatchControllerSpec extends Specification implements ControllerUnitTes
         controller.save(match)
 
         then:"A redirect is issued to the show action"
-        response.redirectedUrl == '/match/show/1'
+        response.redirectedUrl == '/deadMatch/show/1'
         controller.flash.message != null
     }
 
     void "Test the save action with an invalid instance"() {
         given:
-        controller.matchService = Mock(MatchService) {
+        controller.deadMatchService = Mock(DeadMatchService) {
             1 * save(_ as DeadMatch) >> { DeadMatch match ->
                 throw new ValidationException("Invalid instance", match.errors)
             }
@@ -91,7 +91,7 @@ class DeadMatchControllerSpec extends Specification implements ControllerUnitTes
 
     void "Test the show action with a null id"() {
         given:
-        controller.matchService = Mock(MatchService) {
+        controller.deadMatchService = Mock(DeadMatchService) {
             1 * get(null) >> null
         }
 
@@ -104,7 +104,7 @@ class DeadMatchControllerSpec extends Specification implements ControllerUnitTes
 
     void "Test the show action with a valid id"() {
         given:
-        controller.matchService = Mock(MatchService) {
+        controller.deadMatchService = Mock(DeadMatchService) {
             1 * get(2) >> new DeadMatch()
         }
 
@@ -117,7 +117,7 @@ class DeadMatchControllerSpec extends Specification implements ControllerUnitTes
 
     void "Test the edit action with a null id"() {
         given:
-        controller.matchService = Mock(MatchService) {
+        controller.deadMatchService = Mock(DeadMatchService) {
             1 * get(null) >> null
         }
 
@@ -130,7 +130,7 @@ class DeadMatchControllerSpec extends Specification implements ControllerUnitTes
 
     void "Test the edit action with a valid id"() {
         given:
-        controller.matchService = Mock(MatchService) {
+        controller.deadMatchService = Mock(DeadMatchService) {
             1 * get(2) >> new DeadMatch()
         }
 
@@ -149,13 +149,13 @@ class DeadMatchControllerSpec extends Specification implements ControllerUnitTes
         controller.update(null)
 
         then:"A 404 error is returned"
-        response.redirectedUrl == '/match/index'
+        response.redirectedUrl == '/deadMatch/index'
         flash.message != null
     }
 
     void "Test the update action correctly persists"() {
         given:
-        controller.matchService = Mock(MatchService) {
+        controller.deadMatchService = Mock(DeadMatchService) {
             1 * save(_ as DeadMatch)
         }
 
@@ -170,13 +170,13 @@ class DeadMatchControllerSpec extends Specification implements ControllerUnitTes
         controller.update(match)
 
         then:"A redirect is issued to the show action"
-        response.redirectedUrl == '/match/show/1'
+        response.redirectedUrl == '/deadMatch/show/1'
         controller.flash.message != null
     }
 
     void "Test the update action with an invalid instance"() {
         given:
-        controller.matchService = Mock(MatchService) {
+        controller.deadMatchService = Mock(DeadMatchService) {
             1 * save(_ as DeadMatch) >> { DeadMatch match ->
                 throw new ValidationException("Invalid instance", match.errors)
             }
@@ -199,13 +199,13 @@ class DeadMatchControllerSpec extends Specification implements ControllerUnitTes
         controller.delete(null)
 
         then:"A 404 is returned"
-        response.redirectedUrl == '/match/index'
+        response.redirectedUrl == '/deadMatch/index'
         flash.message != null
     }
 
     void "Test the delete action with an instance"() {
         given:
-        controller.matchService = Mock(MatchService) {
+        controller.deadMatchService = Mock(DeadMatchService) {
             1 * delete(2)
         }
 
@@ -215,7 +215,7 @@ class DeadMatchControllerSpec extends Specification implements ControllerUnitTes
         controller.delete(2)
 
         then:"The user is redirected to index"
-        response.redirectedUrl == '/match/index'
+        response.redirectedUrl == '/deadMatch/index'
         flash.message != null
     }
 }

@@ -9,18 +9,18 @@ import org.hibernate.SessionFactory
 @Rollback
 class DeadMatchServiceSpec extends Specification {
 
-    MatchService matchService
+    DeadMatchService matchService
     SessionFactory sessionFactory
 
     private Long setupData() {
         // TODO: Populate valid domain instances and return a valid ID
         //new DeadMatch(...).save(flush: true, failOnError: true)
         //new DeadMatch(...).save(flush: true, failOnError: true)
-        //DeadMatch match = new DeadMatch(...).save(flush: true, failOnError: true)
+        //DeadMatch deadMatch = new DeadMatch(...).save(flush: true, failOnError: true)
         //new DeadMatch(...).save(flush: true, failOnError: true)
         //new DeadMatch(...).save(flush: true, failOnError: true)
         assert false, "TODO: Provide a setupData() implementation for this generated test suite"
-        //match.id
+        //deadMatch.id
     }
 
     void "test get"() {

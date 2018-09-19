@@ -3,7 +3,7 @@ package mbds
 import grails.gorm.services.Service
 
 @Service(DeadMatch)
-interface MatchService {
+interface DeadMatchService {
 
     DeadMatch get(Serializable id)
 
@@ -13,6 +13,6 @@ interface MatchService {
 
     void delete(Serializable id)
 
-    DeadMatch save(DeadMatch match)
+    DeadMatch save(DeadMatch deadMatch)
 
 }
