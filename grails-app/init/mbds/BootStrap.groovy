@@ -20,7 +20,7 @@ class BootStrap {
         def user1 = new User(username: 'Player1', password: 'Player1').save(flush: true, failOnError: true)
         def user2 = new User(username: 'Player2', password: 'Player2').save(flush: true, failOnError: true)
 
-        new DeadMatch(winner: user1, looser: user2, winnerScore: 10, looserscore: 1, dateCreated: new Date()).save(flush: true, failOnError: true)
+        new DeadMatch(winner: user1, looser: user2, winnerScore: 10, looserScore: 1, dateCreated: new Date()).save(flush: true, failOnError: true)
 
         new Message(author: user1, target: user2, content:"hello friend").save(flush: true, failOnError: true)
         new Message(author: user1, target: user2, content:"hello friend").save(flush: true, failOnError: true)
