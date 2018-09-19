@@ -52,6 +52,11 @@
         <a href="#">Nouvellle utilisateur</a>
     </div>
 
+    <div class="vertical-menu">
+        <a href="#" class="active">Listes des messages</a>
+        <a href="#">Nouveau message</a>
+    </div>
+
     <div id="content" role="main">
         <section class="row colset-2-its">
             <h1>Welcome Admin</h1>
