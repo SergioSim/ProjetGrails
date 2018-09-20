@@ -6764,7 +6764,10 @@ button.close {
     display: none !important;
   }
 }
-
+.menu-gauche {
+  margin-top: 5px;
+  margin-left: 5px;
+}
 .vertical-menu {
   width: 200px; /* Set a width if you like */
 }
