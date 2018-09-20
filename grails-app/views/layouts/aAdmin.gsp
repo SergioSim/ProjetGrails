@@ -9,15 +9,22 @@
     <asset:stylesheet src="application.css"/>
 </head>
 <body onload="${pageProperty(name:'body.onload')}">
-<div class="menu">
-    <div class="nav" role="navigation">
-        <ul>
-            <li><g:link class="create" action="index">Main</g:link></li>
-            <li><g:link class="create" action="userView">User</g:link></li>
-            <li><g:link class="create" action="roleView">Role</g:link></li>
-            <li><g:link class="create" action="messageView">Message</g:link></li>
-            <li><g:link class="create" action="deadMatchView">Dead Match</g:link></li>
-        </ul>
+
+<div class="menu-gauche">
+    <div class="vertical-menu">
+        <g:link class="create" action="index">Main</g:link>
+        <a href="#" class="active">Utilisateur</a>
+        <g:link class="create" action="userView">Liste des utilisateurs</g:link>
+    </div>
+
+    <div class="vertical-menu">
+        <a href="" class="active">Message</a>
+        <g:link class="create" action="messageView">Listes des messages</g:link>
+    </div>
+
+    <div class="vertical-menu">
+        <a href="" class="active">Match</a>
+        <g:link class="create" action="deadMatchView">Listes des Dead Matchs</g:link>
     </div>
 </div>
 <div class="body">
