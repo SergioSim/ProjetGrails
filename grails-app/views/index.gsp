@@ -4,7 +4,7 @@
     <meta name="layout" content="main"/>
     <title>Welcome to Grails</title>
 </head>
-<body>
+<div>
     <content tag="nav">
         <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Application Status <span class="caret"></span></a>
@@ -45,22 +45,25 @@
 
         </div>
     </div>
-
+    <div class="menu-gauche">
     <div class="vertical-menu">
         <a href="#" class="active">Utilisateurs</a>
-        <a href="#">Liste des utilisateurs</a>
-        <a href="#">Nouvellle utilisateur</a>
+        <a href="/mbds/user/index">Liste des utilisateurs</a>
+        <a href="#">Nouvelle utilisateur</a>
     </div>
 
     <div class="vertical-menu">
-        <a href="#" class="active">Listes des messages</a>
+        <a href="" class="active">Messages</a>
+        <a href="#">Listes des messages</a>
         <a href="#">Nouveau message</a>
+    </div>
+    </div>
+    <div class="center-boody">
+        <center><h1> Welcome Admin </h1></center>
     </div>
 
     <div id="content" role="main">
         <section class="row colset-2-its">
-            <h1>Welcome Admin</h1>
-
             <div id="controllers" role="navigation">
                 <ul>
                     <g:each var="c" in="${grailsApplication.controllerClasses.sort { it.fullName } }">
