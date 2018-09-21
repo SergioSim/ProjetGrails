@@ -9,15 +9,45 @@
     <asset:stylesheet src="application.css"/>
 </head>
 <body onload="${pageProperty(name:'body.onload')}">
-<div class="menu">
-    <div class="nav" role="navigation">
-        <ul>
-            <li><g:link class="create" action="index">Main</g:link></li>
-            <li><g:link class="create" action="userView">User</g:link></li>
-            <li><g:link class="create" action="roleView">Role</g:link></li>
-            <li><g:link class="create" action="messageView">Message</g:link></li>
-            <li><g:link class="create" action="deadMatchView">Dead Match</g:link></li>
-        </ul>
+<div class="navbar navbar-default navbar-static-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/#">
+                <asset:image src="grails.svg" alt="Grails Logo"/>
+            </a>
+        </div>
+        <div class="navbar-collapse collapse" aria-expanded="false" style="height: 0.8px;">
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a href="/mbds/logout/index" role="button"  aria-expanded="false">Logout </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+  </div>
+<div>
+
+<div class="menu-gauche">
+    <div class="vertical-menu">
+        <g:link class="create" action="index">Main</g:link>
+        <a href="#" class="active">Utilisateur</a>
+        <g:link class="create" action="userView">Liste des utilisateurs</g:link>
+    </div>
+
+    <div class="vertical-menu">
+        <a href="" class="active">Message</a>
+        <g:link class="create" action="messageView">Listes des messages</g:link>
+    </div>
+
+    <div class="vertical-menu">
+        <a href="" class="active">Match</a>
+        <g:link class="create" action="deadMatchView">Listes des Dead Matchs</g:link>
     </div>
 </div>
 <div class="body">
