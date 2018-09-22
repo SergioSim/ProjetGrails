@@ -6799,6 +6799,52 @@ button.close {
   transform:translate(-50%, -50%);
 
 }
+.liste_utilisateur{
+  overflow: auto;
+}
 
+.liste_utilisateur .utilisateur{
+  float: left;
+}
+.utilisateur {
+  width: 180px;
+  height: 191px;
+  border-width: 5px;
+  border-color:blue;
+  background-color: #1b6d85;
+  margin:5px;
+}
+utilisateur p {
+  width: 40px;
+  height: 25px;
+  margin-left: 10px;
+}
+.photo {
+  width: 100%;
+  height: 140px;
+  background-color:mediumpurple;
+  float: right;
+}
+.operation-user d{
+  width:35px;
+
+}
+.d1{
+  width: 33%;
+  margin-top: 2px;
+  background:black ;
+}
+.d2{
+  width: 33%;
+  margin-left:33%;
+  margin-top: -24px;
+  background: #4CAF50;
+}
+.d3{
+  width: 33%;
+  margin-left:66%;
+  margin-top: -24px;
+  background-color: #5bc0de;
+}
 
 /*# sourceMappingURL=bootstrap.css.map */

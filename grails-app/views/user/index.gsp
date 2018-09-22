@@ -19,10 +19,19 @@
                 <div class="message" role="status">${flash.message}</div>
             </g:if>
 
-         <div>
+         <div class="liste_utilisateur">
             <g:each  var = "i" in = "${userList}">
                  <g:each  var = "j" in = "${i}">
-                    <div> ${j.username}</div>
+                    <div class="utilisateur"><p>${j.username}</p>
+                    <div class="photo">
+                        photo
+                    </div>
+                        <div class="operation-user">
+                        <div class="d1">dsdsd</div>
+                        <div class="d2">sdsdsd</div>
+                        <div class="d3">sddds</div>
+                        </div>
+                    </div>
                 </g:each>
             </g:each>
          </div>
