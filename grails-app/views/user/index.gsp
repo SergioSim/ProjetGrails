@@ -18,9 +18,15 @@
             <g:if test="${flash.message}">
                 <div class="message" role="status">${flash.message}</div>
             </g:if>
-            <f:table collection="${userList}" />
 
-            <div class="pagination">
+         <div>
+            <g:each  var = "i" in = "${userList}">
+                 <g:each  var = "j" in = "${i}">
+                    <div> ${j.username}</div>
+                </g:each>
+            </g:each>
+         </div>
+                  <div class="pagination">
                 <g:paginate total="${userCount ?: 0}" />
             </div>
         </div>

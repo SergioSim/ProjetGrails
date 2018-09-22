@@ -5,17 +5,14 @@
     <meta name="layout" content="aAdmin" />
     <title>Hello ${theUser}</title>
 </head>
-<body>
+<body class="bod">
 <h1>Welcome ${theUser}</h1>
-<p> your role is : ${theUser} - yes you are THE ONE</p>
-<p>Your images : ...</p>
-<p>Upload image : ...</p>
 <g:set var="now">
     Some re-usable code on: ${new Date()}
 </g:set>
+
+
 <p>${now}</p>
-
-
 <g:if test="${thePage == ''}">
     <h1>hello</h1>
 </g:if>

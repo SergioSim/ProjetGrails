@@ -25,10 +25,7 @@
                 </g:eachError>
             </ul>
             </g:hasErrors>
-            <g:form class="buttons" controller="Usercontroller" action="fupload" method="POST" enctype="multipart/form-data" useToken="false">
-                Upload photo <input id="files" type="file" name="myFile" multiple />
-            </g:form>
-            <f:table collection= "${pointOfInterestList } "properties="['name']"/>
+            <f:table collection= "userList" properties = "['Username']" />
 
             <g:form resource="${this.user}" method="POST">
                 <fieldset class="form">
@@ -38,6 +35,6 @@
                     <g:submitButton name="create" class="save" value="${message(code: 'default.button.create.label', default: 'Create')}" />
                 </fieldset>
             </g:form>
+</html>
         </div>
     </body>
-</html>

@@ -2,7 +2,11 @@ html, code, kbd, pre, samp {
     -ms-text-size-adjust: 100%;
     -webkit-text-size-adjust: 100%;
 }
-
+.body {
+    color:red;
+    margin-left:235px;
+    margin-top: -322px;
+}
 html, body {
     height: 100%;
     -webkit-overflow-scrolling: touch;
