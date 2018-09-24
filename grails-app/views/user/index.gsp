@@ -27,10 +27,14 @@
                         photo
                     </div>
                         <div class="operation-user">
-                        <div class="d1">dsdsd</div>
-                        <div class="d2">sdsdsd</div>
-                        <div class="d3">sddds</div>
+                            <div class="d1"><a class="logo-oiel" href="/#">
+                                <img src="/mbds/assets/logo_oeil.png"/>
+                            </a>
+                            </div>
+                            <div class="d2">Delete</div>
+                            <div class="d3">Edit</div>
                         </div>
+
                     </div>
                 </g:each>
             </g:each>
