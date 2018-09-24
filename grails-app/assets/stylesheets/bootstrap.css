@@ -6809,7 +6809,6 @@ button.close {
 .utilisateur {
   width: 180px;
   height: 191px;
-  border-width: 5px;
   border-color:blue;
   background-color: #1b6d85;
   margin:5px;
@@ -6844,23 +6843,32 @@ utilisateur p {
 }
 .d2{
   width: 33%;
-  background: #4CAF50;
+  background: #5bc0de;
   border: 1px solid green;
   text-align: center;
   float: left;
 }
+.d2:hover {
+  background-color: red;
+  color: white;
+}
 .d3{
-  width: 33%;
+  width: 34%;
   height: 27px;
   background-color: #5bc0de;
   border: 1px solid green;
   text-align: center;
   float: left;
 }
+
+.d3:hover {
+  background-color: #4CAF50; /* Green */
+  color: white;
+}
 .logo-oiel img {
   width: 45px;
   height: 25px;
-  margin-left: 4px;
+  margin-left: 2px;
 
 }
 
