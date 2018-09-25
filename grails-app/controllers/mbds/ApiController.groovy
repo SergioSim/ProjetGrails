@@ -31,6 +31,18 @@ class ApiController {
                     response.status = 300
                 }
                 break
+            
+            case "PUT":
+                println(request.JSON)
+                def userInstance=User.get(id)
+                userInstance.properties=request.JSON
+
+                if (userInstance.validate()) {
+                    response.status = 201
+                } else {
+                    response.status = 300
+                }
+
             default:
                 render(status: 500, text: "User not found")
         }
