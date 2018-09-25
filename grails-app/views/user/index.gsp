@@ -32,7 +32,7 @@
                             </a>
                             </div>
                             <div class="d2">Delete</div>
-                            <div class="d3">Edit</div>
+                            <div class="d3"><g:link controller="user" action="edit" id="${j.id}">Edit</g:link></div>
                         </div>
 
                     </div>
