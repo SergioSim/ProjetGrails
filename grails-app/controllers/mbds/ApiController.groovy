@@ -11,6 +11,9 @@ class ApiController {
                 def rep= new JSON(target:User.list())
                 render rep
                 break;
+            case "POST":
+                def user = new User(request).save(flush: true)
+
             default:
                 response: 500;
         }
