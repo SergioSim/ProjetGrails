@@ -6810,7 +6810,7 @@ button.close {
   width: 180px;
   height: 191px;
   border-color:blue;
-  background-color: #1b6d85;
+  background-color:darkgrey ;
   margin:5px;
   text-align: center;
 }
@@ -6871,5 +6871,10 @@ utilisateur p {
   margin-left: 2px;
 
 }
+.logo-utlisateur{
 
+  width: 15px;
+  height: 25px;
+
+}
 /*# sourceMappingURL=bootstrap.css.map */
