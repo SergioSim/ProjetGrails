@@ -27,10 +27,13 @@
                         photo
                     </div>
                         <div class="operation-user">
-                            <div class="d1"><a class="logo-oiel" href="/#">
-                                <img src="/mbds/assets/logo_oeil.png"/>
-                            </a>
+
+                            <div class="d1">
+                                <g:link action="show" id="${j.id}" class="logo-oiel">
+                                    <img src="/mbds/assets/logo_oeil.png" alt="edit" border="0"/>
+                                </g:link>
                             </div>
+
                             <div class="d2"><g:link controller="user" action="delete" id="${j.id}">Delete</g:link></div>
                             <div class="d3"><g:link controller="user" action="edit" id="${j.id}">Edit</g:link></div>
                         </div>
