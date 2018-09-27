@@ -11,8 +11,6 @@ class UserRoleController {
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        println params
-        println userRoleService.list(params)
         respond userRoleService.list(params), model:[userRoleCount: userRoleService.count()]
     }
 

@@ -7,37 +7,37 @@ import org.hibernate.SessionFactory
 
 @Integration
 @Rollback
-class UserServiceSpec extends Specification {
+class UserImageServiceSpec extends Specification {
 
-    UserService userService
+    UserImageService userImageService
     SessionFactory sessionFactory
 
     private Long setupData() {
         // TODO: Populate valid domain instances and return a valid ID
-        //new User(...).save(flush: true, failOnError: true)
-        //new User(...).save(flush: true, failOnError: true)
-        //User id = new User(...).save(flush: true, failOnError: true)
-        //new User(...).save(flush: true, failOnError: true)
-        //new User(...).save(flush: true, failOnError: true)
+        //new UserImage(...).save(flush: true, failOnError: true)
+        //new UserImage(...).save(flush: true, failOnError: true)
+        //UserImage userImage = new UserImage(...).save(flush: true, failOnError: true)
+        //new UserImage(...).save(flush: true, failOnError: true)
+        //new UserImage(...).save(flush: true, failOnError: true)
         assert false, "TODO: Provide a setupData() implementation for this generated test suite"
-        //id.id
+        //userImage.id
     }
 
     void "test get"() {
         setupData()
 
         expect:
-        userService.get(1) != null
+        userImageService.get(1) != null
     }
 
     void "test list"() {
         setupData()
 
         when:
-        List<User> userList = userService.list(max: 2, offset: 2)
+        List<UserImage> userImageList = userImageService.list(max: 2, offset: 2)
 
         then:
-        userList.size() == 2
+        userImageList.size() == 2
         assert false, "TODO: Verify the correct instances are returned"
     }
 
@@ -45,30 +45,30 @@ class UserServiceSpec extends Specification {
         setupData()
 
         expect:
-        userService.count() == 5
+        userImageService.count() == 5
     }
 
     void "test delete"() {
-        Long userId = setupData()
+        Long userImageId = setupData()
 
         expect:
-        userService.count() == 5
+        userImageService.count() == 5
 
         when:
-        userService.delete(userId)
+        userImageService.delete(userImageId)
         sessionFactory.currentSession.flush()
 
         then:
-        userService.count() == 4
+        userImageService.count() == 4
     }
 
     void "test save"() {
         when:
         assert false, "TODO: Provide a valid instance to save"
-        User user = new User()
-        userService.save(user)
+        UserImage userImage = new UserImage()
+        userImageService.save(userImage)
 
         then:
-        user.id != null
+        userImage.id != null
     }
 }

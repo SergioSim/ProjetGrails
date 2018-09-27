@@ -2,12 +2,14 @@ package mbds
 
 import grails.validation.ValidationException
 import org.springframework.security.access.annotation.Secured
+import org.springframework.web.multipart.MultipartFile
 
 import static org.springframework.http.HttpStatus.*
 
 class UserController {
 
     UserService userService
+    UserImageService userImageService
 
     static allowedMethods = [save: "POST", update: "PUT"]
 
@@ -25,6 +27,7 @@ class UserController {
         respond new User(params)
     }
 
+    @Secured(['ROLE_ADMIN'])
     def save(User user) {
         if (user == null) {
             notFound()
@@ -32,10 +35,29 @@ class UserController {
         }
 
         try {
-            userService.save(user)
+            user.save(flush: true)
         } catch (ValidationException e) {
             respond user.errors, view:'create'
             return
+        }
+
+        MultipartFile f = request.getFile("userImageFile")
+        if (!f.empty) {
+            println f.getContentType()
+            println f.getOriginalFilename()
+            println f.getBytes()
+            try {
+                UserImage ui = new UserImage()
+                ui.imageName = f.getOriginalFilename()
+                ui.imageType = f.getContentType()
+                ui.imageBytes = f.getBytes()
+                ui.user = userService.get(user.id)
+                ui.save()
+            } catch (ValidationException e) {
+                render "Invalid Image"
+                println "hah"
+                return
+            }
         }
 
         request.withFormat {
