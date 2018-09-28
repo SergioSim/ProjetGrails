@@ -24,7 +24,7 @@
                  <g:each  var = "j" in = "${i}">
                     <div class="utilisateur"><p>${j.username}</p>
                     <div class="photo">
-                        photo
+                        <img src="${createLink(controller: 'user', action: 'getUserImage', id:j.id )}" />
                     </div>
                         <div class="operation-user">
 

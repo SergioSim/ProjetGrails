@@ -50,9 +50,6 @@ class UserController {
 
         MultipartFile f = request.getFile("userImageFile")
         if (!f.empty) {
-            println f.getContentType()
-            println f.getOriginalFilename()
-            println f.getBytes()
             try {
                 UserImage ui = new UserImage()
                 ui.imageName = f.getOriginalFilename()
@@ -61,7 +58,6 @@ class UserController {
                 ui.user = userService.get(user.id)
                 ui.id = user.id
                 userImageService.save(ui)
-                print(ui)
             } catch (ValidationException e) {
                 render "Invalid Image"
                 println "hah"
