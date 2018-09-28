@@ -30,7 +30,11 @@ class UserController {
     @Secured(['ROLE_ADMIN'])
     def getUserImage(Long id) {
         UserImage ui = userImageService.get(id)
-        response.outputStream << ui.imageBytes
+        if(ui != null){
+            response.outputStream << ui.imageBytes
+        }else{
+            response.outputStream << new URL("http://82.255.166.104/anonymous.jpg").bytes
+        }
         response.outputStream.flush()
     }
 
