@@ -20,6 +20,14 @@
             <div class="message" role="status">${flash.message}</div>
             </g:if>
             <f:display bean="user" />
+            <ol class="property-list user">
+                <li class="fieldcontain">
+                    <span id="enabled-label" class="property-label">Image</span>
+                    <div class="property-value" aria-labelledby="enabled-label">
+                        <img src="${createLink(controller: 'user', action: 'getUserImage', id: this.user.id )}" height="140px" width="140px" />
+                    </div>
+                </li>
+            </ol>
             <g:form resource="${this.user}" method="DELETE">
                 <fieldset class="buttons">
                     <g:link class="edit" action="edit" resource="${this.user}"><g:message code="default.button.edit.label" default="Edit" /></g:link>

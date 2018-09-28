@@ -26,15 +26,21 @@
                 </g:eachError>
             </ul>
             </g:hasErrors>
-            <g:form resource="${this.user}" method="PUT">
+            <g:uploadForm resource="${this.user}" method="PUT" enctype="multipart/form-data">
                 <g:hiddenField name="version" value="${this.user?.version}" />
                 <fieldset class="form">
                     <f:all bean="user"/>
+                    <div class="fieldcontain">
+                        <label for="userImageFile">
+                            Image
+                        </label>
+                        <input type="file" id="userImageFile" name="userImageFile"/>
+                    </div>
                 </fieldset>
                 <fieldset class="buttons">
                     <input class="save" type="submit" value="${message(code: 'default.button.update.label', default: 'Update')}" />
                 </fieldset>
-            </g:form>
+            </g:uploadForm>
         </div>
     </body>
 </html>

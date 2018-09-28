@@ -1,6 +1,8 @@
 package mbds
 
 import grails.validation.ValidationException
+import org.apache.catalina.core.ApplicationPart
+import org.hibernate.SessionFactory
 import org.springframework.security.access.annotation.Secured
 import org.springframework.web.multipart.MultipartFile
 
@@ -10,6 +12,7 @@ class UserController {
 
     UserService userService
     UserImageService userImageService
+    SessionFactory sessionFactory
 
     static allowedMethods = [save: "POST", update: "PUT"]
 
@@ -46,11 +49,14 @@ class UserController {
         }
 
         try {
-            user.save(flush: true)
+            userService.save(user)
         } catch (ValidationException e) {
             respond user.errors, view:'create'
             return
         }
+        def hibSession = sessionFactory.getCurrentSession()
+        assert hibSession != null
+        hibSession.flush()
 
         MultipartFile f = request.getFile("userImageFile")
         if (!f.empty) {
@@ -64,7 +70,6 @@ class UserController {
                 userImageService.save(ui)
             } catch (ValidationException e) {
                 render "Invalid Image"
-                println "hah"
                 return
             }
         }
@@ -93,6 +98,27 @@ class UserController {
         } catch (ValidationException e) {
             respond user.errors, view:'edit'
             return
+        }
+
+        def hibSession = sessionFactory.getCurrentSession()
+        assert hibSession != null
+        hibSession.flush()
+
+        ApplicationPart f = request.getPart("userImageFile")
+        if (f.getSize() != 0) {
+            try {
+                UserImage ui = new UserImage()
+                ui.imageName = f.getSubmittedFileName()
+                ui.imageType = f.getContentType()
+                ui.imageBytes = f.getInputStream().getBytes()
+                ui.user = userService.get(user.id)
+                ui.id = user.id
+                userImageService.save(ui)
+            } catch (ValidationException e) {
+                println e
+                render "Invalid Image"
+                return
+            }
         }
 
         request.withFormat {

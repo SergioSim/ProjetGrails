@@ -42,7 +42,7 @@ class UserImage implements Serializable{
 
     private static DetachedCriteria criteriaFor(long userId) {
         UserImage.where {
-            user == User.load(userId)
+            user.id == User.load(userId).id
         }
     }
 
