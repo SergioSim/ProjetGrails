@@ -29,7 +29,6 @@ class UserImageController {
         }
 
         try {
-            println userImage
             userImageService.save(userImage)
         } catch (ValidationException e) {
             respond userImage.errors, view:'create'

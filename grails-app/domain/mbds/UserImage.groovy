@@ -67,6 +67,7 @@ class UserImage implements Serializable{
     }
 
     static mapping = {
+        id column: 'user', generator: 'assigned'
         version false
     }
 }

@@ -28,6 +28,13 @@ class UserController {
     }
 
     @Secured(['ROLE_ADMIN'])
+    def getUserImage(Long id) {
+        UserImage ui = userImageService.get(id)
+        response.outputStream << ui.imageBytes
+        response.outputStream.flush()
+    }
+
+    @Secured(['ROLE_ADMIN'])
     def save(User user) {
         if (user == null) {
             notFound()
@@ -52,7 +59,9 @@ class UserController {
                 ui.imageType = f.getContentType()
                 ui.imageBytes = f.getBytes()
                 ui.user = userService.get(user.id)
-                ui.save()
+                ui.id = user.id
+                userImageService.save(ui)
+                print(ui)
             } catch (ValidationException e) {
                 render "Invalid Image"
                 println "hah"
