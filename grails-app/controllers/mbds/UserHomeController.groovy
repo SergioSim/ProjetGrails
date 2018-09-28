@@ -14,7 +14,8 @@ class UserHomeController {
         if(role == 'ROLE_USER'){
             render( view: 'index', model: [theUser: currentUserName, theRole: role])
         }else if(role == 'ROLE_ADMIN'){
-            render( view: 'admin', model: [theUser: currentUserName, theRole: role, thePage: ''])
+            User user = User.findByUsername(currentUserName)
+            render( view: 'admin', model: [theUser: currentUserName, theRole: role, thePage: '', theId: user.id])
         }
 
     }
