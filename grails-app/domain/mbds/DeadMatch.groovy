@@ -6,7 +6,7 @@ class DeadMatch {
     User looser
     int winnerScore
     int looserScore
-    Date dateCreated
+    Date dateCreated = new Date()
 
     static constraints = {
     }
