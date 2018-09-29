@@ -4,6 +4,7 @@ import grails.validation.ValidationException
 import org.apache.catalina.core.ApplicationPart
 import org.hibernate.SessionFactory
 import org.springframework.security.access.annotation.Secured
+import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.web.multipart.MultipartFile
 
 import static org.springframework.http.HttpStatus.*
@@ -13,6 +14,8 @@ class UserController {
     UserService userService
     UserImageService userImageService
     SessionFactory sessionFactory
+    UserRoleService userRoleService
+    RoleService roleService
 
     static allowedMethods = [save: "POST", update: "PUT"]
 
@@ -25,7 +28,7 @@ class UserController {
     def show(Long id) {
         respond userService.get(id)
     }
-    @Secured(['ROLE_ADMIN'])
+    @Secured(['IS_AUTHENTICATED_ANONYMOUSLY'])
     def create() {
         respond new User(params)
     }
@@ -41,7 +44,7 @@ class UserController {
         response.outputStream.flush()
     }
 
-    @Secured(['ROLE_ADMIN'])
+    @Secured(['IS_AUTHENTICATED_ANONYMOUSLY'])
     def save(User user) {
         if (user == null) {
             notFound()
@@ -57,6 +60,12 @@ class UserController {
         def hibSession = sessionFactory.getCurrentSession()
         assert hibSession != null
         hibSession.flush()
+
+        String theRole = SecurityContextHolder.getContext().getAuthentication().getAuthorities().first()
+        if(theRole == "ROLE_ANONYMOUS"){
+            Role role = roleService.get(2)
+            new UserRole(user: user, role: role).save(flush: true)
+        }
 
         MultipartFile f = request.getFile("userImageFile")
         if (!f.empty) {
