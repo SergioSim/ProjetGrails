@@ -22,25 +22,25 @@ class MessageController {
         respond new Message(params)
     }
 
-    def save(Message message) {
-        if (message == null) {
+    def save(Message userMessage) {
+        if (userMessage == null) {
             notFound()
             return
         }
 
         try {
-            messageService.save(message)
+            messageService.save(userMessage)
         } catch (ValidationException e) {
-            respond message.errors, view:'create'
+            respond userMessage.errors, view:'create'
             return
         }
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.created.message', args: [message(code: 'message.label', default: 'Message'), message.id])
-                redirect message
+                flash.message = message(code: 'default.created.message', args: [message(code: 'userMessage.label', default: 'Message'), userMessage.id])
+                redirect userMessage
             }
-            '*' { respond message, [status: CREATED] }
+            '*' { respond userMessage, [status: CREATED] }
         }
     }
 

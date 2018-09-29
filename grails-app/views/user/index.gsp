@@ -43,7 +43,7 @@
             </g:each>
          </div>
                   <div class="pagination">
-                <g:paginate total="${userCount ?: 0}" />
+                <g:paginate controller="userHome" action="userView" total="${userCount ?: 0}" />
             </div>
         </div>
     </body>

@@ -24,7 +24,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="/#">
+                <a class="navbar-brand" href="/mbds">
 		    <asset:image src="MBDS.png" alt="Grails Logo"/>
                 </a>
             </div>
