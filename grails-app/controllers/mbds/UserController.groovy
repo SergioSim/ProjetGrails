@@ -14,7 +14,6 @@ class UserController {
     UserService userService
     UserImageService userImageService
     SessionFactory sessionFactory
-    UserRoleService userRoleService
     RoleService roleService
 
     static allowedMethods = [save: "POST", update: "PUT"]
@@ -33,7 +32,7 @@ class UserController {
         respond new User(params)
     }
 
-    @Secured(['ROLE_ADMIN'])
+    @Secured(['ROLE_ADMIN','ROLE_USER'])
     def getUserImage(Long id) {
         UserImage ui = userImageService.get(id)
         if(ui != null){
@@ -60,11 +59,15 @@ class UserController {
         def hibSession = sessionFactory.getCurrentSession()
         assert hibSession != null
         hibSession.flush()
-
-        String theRole = SecurityContextHolder.getContext().getAuthentication().getAuthorities().first()
-        if(theRole == "ROLE_ANONYMOUS"){
-            Role role = roleService.get(2)
-            new UserRole(user: user, role: role).save(flush: true)
+        try {
+            def theRole = UserRole.findByUser(user)
+            if (theRole == null) {
+                Role role = roleService.get(2)
+                new UserRole(user: user, role: role).save(flush: true)
+            }
+        }catch (ValidationException e) {
+            respond user.errors, view:'create'
+            return
         }
 
         MultipartFile f = request.getFile("userImageFile")

@@ -11,11 +11,21 @@ class UserHomeController {
     def index() {
         String currentUserName = SecurityContextHolder.getContext().getAuthentication().getName()
         String role = SecurityContextHolder.getContext().getAuthentication().getAuthorities().first()
+        User user = User.findByUsername(currentUserName)
         if(role == 'ROLE_USER'){
-            render( view: 'index', model: [theUser: currentUserName, theRole: role])
+            render( view: 'index',
+                    model: [
+                            theUser: user,
+                            theRole: role,
+                            theInBox: getUserMessageAuthor(user.id),
+                            theOutBox: getUserMessageTarget(user.id)])
         }else if(role == 'ROLE_ADMIN'){
-            User user = User.findByUsername(currentUserName)
-            render( view: 'admin', model: [theUser: currentUserName, theRole: role, thePage: '', theId: user.id])
+            render( view: 'admin',
+                    model: [
+                            theUser: currentUserName,
+                            theRole: role,
+                            thePage: '',
+                            theId: user.id])
         }
 
     }
@@ -45,5 +55,23 @@ class UserHomeController {
     }
 
     def statisticView(){
+    }
+
+    @Secured(['ROLE_ADMIN','ROLE_USER'])
+    def getUserMessageAuthor(Long id) {
+        String currentUserName = SecurityContextHolder.getContext().getAuthentication().getName()
+        User user = User.findByUsername(currentUserName)
+        if(id == user.id){
+            return Message.findAllByAuthor(user)
+        }
+    }
+
+    @Secured(['ROLE_ADMIN','ROLE_USER'])
+    def getUserMessageTarget(Long id) {
+        String currentUserName = SecurityContextHolder.getContext().getAuthentication().getName()
+        User user = User.findByUsername(currentUserName)
+        if(id == user.id){
+            return Message.findAllByTarget(user)
+        }
     }
 }
