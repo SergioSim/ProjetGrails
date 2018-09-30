@@ -1,6 +1,8 @@
 package mbds
 
 import grails.validation.ValidationException
+import org.springframework.security.access.annotation.Secured
+
 import static org.springframework.http.HttpStatus.*
 
 class MessageController {
@@ -18,10 +20,11 @@ class MessageController {
         respond messageService.get(id)
     }
 
+    @Secured(['ROLE_ADMIN','ROLE_USER'])
     def create() {
         respond new Message(params)
     }
-
+    @Secured(['ROLE_ADMIN','ROLE_USER'])
     def save(Message userMessage) {
         if (userMessage == null) {
             notFound()
@@ -38,7 +41,7 @@ class MessageController {
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.created.message', args: [message(code: 'userMessage.label', default: 'Message'), userMessage.id])
-                redirect userMessage
+                redirect(controller: "userHome", action: "index")
             }
             '*' { respond userMessage, [status: CREATED] }
         }

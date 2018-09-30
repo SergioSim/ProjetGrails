@@ -4,14 +4,13 @@
     <meta name="layout" content="main"/>
     <title>Welcome to Grails</title>
 </head>
-<div>
-    <content tag="nav">
-        <li class="dropdown">
-            <a href="/mbds/logout/index" role="button"  aria-expanded="false">Logout </a>
-        </li>
-    </content>
-
-        </div>
+<body>
+    <div>
+        <content tag="nav">
+            <li class="dropdown">
+                <a href="/mbds/logout/index" role="button"  aria-expanded="false">Logout </a>
+            </li>
+        </content>
     </div>
     <div class="menu-gauche">
     <div class="vertical-menu">

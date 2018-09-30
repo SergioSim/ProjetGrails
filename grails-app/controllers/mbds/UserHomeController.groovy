@@ -1,11 +1,14 @@
 package mbds
 
+import grails.validation.ValidationException
+import org.apache.catalina.core.ApplicationPart
 import org.springframework.security.access.annotation.Secured
 import org.springframework.security.core.context.SecurityContextHolder
 
 class UserHomeController {
 
-    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+    static allowedMethods = [save: "POST", updateImage: "PUT", delete: "DELETE"]
+    UserImageService userImageService
 
     @Secured(['ROLE_USER', 'ROLE_ADMIN'])
     def index() {
@@ -17,8 +20,8 @@ class UserHomeController {
                     model: [
                             theUser: user,
                             theRole: role,
-                            theInBox: getUserMessageAuthor(user.id),
-                            theOutBox: getUserMessageTarget(user.id)])
+                            theInBox: getUserMessageTarget(user.id),
+                            theOutBox: getUserMessageAuthor(user.id)])
         }else if(role == 'ROLE_ADMIN'){
             render( view: 'admin',
                     model: [
@@ -72,6 +75,29 @@ class UserHomeController {
         User user = User.findByUsername(currentUserName)
         if(id == user.id){
             return Message.findAllByTarget(user)
+        }
+    }
+
+    @Secured(['ROLE_ADMIN','ROLE_USER'])
+    def updateImage() {
+        String currentUserName = SecurityContextHolder.getContext().getAuthentication().getName()
+        User user = User.findByUsername(currentUserName)
+        ApplicationPart f = request.getPart("userImageFile")
+        if (f.getSize() != 0) {
+            try {
+                UserImage ui = new UserImage()
+                ui.imageName = f.getSubmittedFileName()
+                ui.imageType = f.getContentType()
+                ui.imageBytes = f.getInputStream().getBytes()
+                ui.user = user
+                ui.id = user.id
+                userImageService.save(ui)
+            } catch (ValidationException e) {
+                println e
+                render "Invalid Image"
+                return
+            }
+            return "HAHA"
         }
     }
 }
