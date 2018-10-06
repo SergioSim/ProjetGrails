@@ -1,10 +1,10 @@
 package mbds
 
+import grails.gorm.transactions.Transactional
 import grails.validation.ValidationException
 import org.apache.catalina.core.ApplicationPart
 import org.hibernate.SessionFactory
 import org.springframework.security.access.annotation.Secured
-import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.web.multipart.MultipartFile
 
 import static org.springframework.http.HttpStatus.*
@@ -12,9 +12,11 @@ import static org.springframework.http.HttpStatus.*
 class UserController {
 
     UserService userService
+    MyUserService myUserService
     UserImageService userImageService
     SessionFactory sessionFactory
     RoleService roleService
+    UserRoleService userRoleService
 
     static allowedMethods = [save: "POST", update: "PUT"]
 
@@ -99,6 +101,7 @@ class UserController {
         respond userService.get(id)
     }
 
+    @Transactional
     def update(User user) {
         if (user == null) {
             notFound()
@@ -112,13 +115,13 @@ class UserController {
             return
         }
 
-        def hibSession = sessionFactory.getCurrentSession()
-        assert hibSession != null
-        hibSession.flush()
-
         ApplicationPart f = request.getPart("userImageFile")
         if (f.getSize() != 0) {
             try {
+                userImageService.delete(user.id)
+                def hibSession = sessionFactory.getCurrentSession()
+                assert hibSession != null
+                hibSession.flush()
                 UserImage ui = new UserImage()
                 ui.imageName = f.getSubmittedFileName()
                 ui.imageType = f.getContentType()
@@ -147,7 +150,13 @@ class UserController {
             notFound()
             return
         }
-
+        def ur = UserRole.get(id,1)
+        def ur2 = UserRole.get(id,2)
+        if(ur){userRoleService.delete(ur)}
+        if(ur2){userRoleService.delete(ur2)}
+        userImageService.delete(id)
+        myUserService.removeUserMessage(id)
+        myUserService.removeUserDeadMatch(id)
         userService.delete(id)
 
         request.withFormat {

@@ -9,7 +9,7 @@ import org.codehaus.groovy.util.HashCodeHelper
 @ToString(cache=true, includeNames=true, includePackage=false)
 class UserImage implements Serializable{
 
-    private static final long serialVersionUID = 1
+    private static final long serialVersionUID = 1L
 
     String imageName
     String imageType
@@ -19,7 +19,7 @@ class UserImage implements Serializable{
     @Override
     boolean equals(other) {
         if (other instanceof UserImage) {
-            other.userId == user?.id
+            other.user?.id == user?.id
         }
     }
 
@@ -34,10 +34,6 @@ class UserImage implements Serializable{
 
     static UserImage get(long userId) {
         criteriaFor(userId).get()
-    }
-
-    static boolean exists(long userId) {
-        criteriaFor(userId).count()
     }
 
     private static DetachedCriteria criteriaFor(long userId) {
@@ -55,7 +51,7 @@ class UserImage implements Serializable{
     static constraints = {
         user nullable: false, blank: false, unique: true, validator:{ User u ->
             if (u?.id) {
-                if (UserImage.exists(u.id)) {
+                if (!User.exists(u.id)) {
                     return ['userImage.exists']
                 }
             }

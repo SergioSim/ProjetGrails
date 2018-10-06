@@ -85,6 +85,10 @@ class UserHomeController {
         ApplicationPart f = request.getPart("userImageFile")
         if (f.getSize() != 0) {
             try {
+                userImageService.delete(user.id)
+                def hibSession = sessionFactory.getCurrentSession()
+                assert hibSession != null
+                hibSession.flush()
                 UserImage ui = new UserImage()
                 ui.imageName = f.getSubmittedFileName()
                 ui.imageType = f.getContentType()

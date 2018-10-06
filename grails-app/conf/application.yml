@@ -99,6 +99,7 @@ dataSource :
     dialect: org.hibernate.dialect.MySQL55Dialect
     username: "GrailsUser"
     password: "GrailsPassword13?"
+    logSql: true
 
 environments:
     development:

@@ -2,7 +2,7 @@ package mbds
 import grails.converters.JSON
 
 class ApiController {
-
+    String home = "http://localhost:8090/mbds/api/"
     def index() {
         render text:"Ohhh"
     }
@@ -15,32 +15,29 @@ class ApiController {
                     if (user == null) {
                         render(status: 400, text: "User not found")
                     } else {
-                        render new JSON(target: user)
+                        render(new JSON(target: user))
                     }
                     break
                 }
-                def rep = new JSON(target: User.list())
-                render rep
+                render(new JSON(target: User.list()))
                 break
 
             case "POST":
-                println(request.JSON)
-                if (new User(request.JSON).save(flush: true)) {
-                    response.status = 201
+                User u = new User(request.JSON).save(flush: true)
+                if (u != null) {
+                    render(status: 201, text: home + "user/" + u.id )
                 } else {
-                    response.status = 300
+                    render(status: 400, text: "Failed to add User")
                 }
                 break
             
             case "PUT":
-                println(request.JSON)
-                def userInstance=User.get(id)
-                userInstance.properties=request.JSON
-
-                if (userInstance.validate()) {
-                    response.status = 201
+                User user = User.get(id)
+                user.properties = request.JSON
+                if (user.validate()) {
+                    render(status: 201, text: home + "user/" + user.id )
                 } else {
-                    response.status = 300
+                    render(status: 304, text: "Failed to update User")
                 }
 
             default:
