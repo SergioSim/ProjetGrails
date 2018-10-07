@@ -87,4 +87,16 @@ class MyUserService {
         userService.delete(id)
         return true
     }
+
+    User save(User user) throws ValidationException{
+        return userService.save(user)
+    }
+
+    List<User> list(Map args){
+        return userService.list(args)
+    }
+
+    User get(Serializable id){
+        return userService.get(id)
+    }
 }

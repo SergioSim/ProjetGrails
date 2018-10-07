@@ -11,17 +11,36 @@ curl -i -H "X-Auth-Token: $token" -X POST http://localhost:8090/mbds/api/logout 
 
 
 POST
-curl -i -H "X-Auth-Token: $token" -d '{"username":"test", "password":"test"}' -H "Content-Type: application/json" http://localhost:8090/mbds/api/user && echo
+curl -i -H "X-Auth-Token: $token" -H "Content-Type: application/json" -d '{"username":"test7", "password":"test"}' http://localhost:8090/mbds/api/user && echo
 
 GET
 curl -i -H "X-Auth-Token: $token" http://localhost:8090/mbds/api/user && echo
-curl -i -H "X-Auth-Token: $token" http://localhost:8090/mbds/api/user/2 && echo
+curl -i -H "X-Auth-Token: $token" http://localhost:8090/mbds/api/user/5 && echo
 
 PUT
-curl -i -H "X-Auth-Token: $token" -X PUT -d '{"username":"test2", "password":"test"}' http://localhost:8090/mbds/api/user && echo //error need id
+curl -i -H "X-Auth-Token: $token" -H "Content-Type: application/json" -X PUT -d '{"username":"test2", "password":"test"}' http://localhost:8090/mbds/api/user && echo //error need id
 
-curl -i -H "X-Auth-Token: $token" -X PUT -d '{"username":"test2", "password":"test"}' http://localhost:8090/mbds/api/user/700 && echo //error user not found
+curl -i -H "X-Auth-Token: $token" -X -H "Content-Type: application/json" PUT -d '{"username":"test2", "password":"test"}' http://localhost:8090/mbds/api/user/700 && echo //error user not found
 
 curl -i -H "X-Auth-Token: $token" -H "Content-Type: application/json" -X PUT -d '{"username":"", "password":"test"}' http://localhost:8090/mbds/api/user/6 && echo //error not valid champs
 
 curl -i -H "X-Auth-Token: $token" -H "Content-Type: application/json" -X PUT -d '{"username":"test2", "password":"test"}' http://localhost:8090/mbds/api/user/6 && echo
+
+DELETE
+curl -i -H "X-Auth-Token: $token" -X "DELETE" http://localhost:8090/mbds/api/user/5
+
+
+DEADMATCH
+
+curl -i -H "X-Auth-Token: $token" -d '{"winner":{"id":1,"dateCreated":"2018-10-07T22:06:17Z","passwordExpired":false,"username":"admin","accountLocked":false,"password":"$2a$10$dP9eTt6BXF3lclyLua/UaeNiUoBEbXAfdBubO04/uN/mdTPMkSEEy","accountExpired":false,"enabled":true}, "looser":{"id":2,"dateCreated":"2018-10-07T22:06:17Z","passwordExpired":false,"username":"playerUser","accountLocked":false,"password":"$2a$10$kqQ1MAMDpDBe1ug1LrrKx.2MVsd3Tft.u3ptYAB6tHHoherzQZ8gm","accountExpired":false,"enabled":true}, "winnerScore":"100", "looserScore":"2"}' -H "Content-Type: application/json" http://localhost:8090/mbds/api/deadmatch && echo
+
+GET
+curl -i -H "X-Auth-Token: $token" http://localhost:8090/mbds/api/deadmatch/ && echo
+curl -i -H "X-Auth-Token: $token" http://localhost:8090/mbds/api/deadmatch/2 && echo
+
+PUT
+curl -i -H "X-Auth-Token: $token" -H "Content-Type: application/json" -X PUT -d '{"winnerScore":"1000"}' http://localhost:8090/mbds/api/deadmatch/2 && echo
+
+DELETE
+curl -i -H "X-Auth-Token: $token" -X "DELETE" http://localhost:8090/mbds/api/deadmatch/11 echo
+curl -i -H "X-Auth-Token: $token" -X "DELETE" http://localhost:8090/mbds/api/deadmatch/2

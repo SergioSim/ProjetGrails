@@ -1,72 +1,88 @@
 package mbds
 import grails.converters.JSON
+import grails.validation.ValidationException
 
 class ApiController {
     String home = "http://localhost:8090/mbds/api/"
-    UserService userService
-    UserImageService userImageService
+    MessageService messageService
+    DeadMatchService deadMatchService
     MyUserService myUserService
-    UserRoleService userRoleService
 
     def index() {
         render text:"Ohhh"
     }
 
-    def user(String id) {
-        switch (request.getMethod()) {
-            case "GET":
-                if (id != 0 && id != null) {
-                    def user = userService.get(id)
-                    if (user == null) {
-                        render(status: 404, text: "User not found")
-                    } else {
-                        render(status: 200, contentType: "application/json", new JSON(target: user))
-                    }
-                    break
+    def user(String id){
+        prepareRequest(id, User.class, myUserService)
+    }
+
+    def message(String id){
+        prepareRequest(id, mbds.Message.class, messageService)
+    }
+
+    def deadmatch(String id){
+        prepareRequest(id, DeadMatch.class, deadMatchService)
+    }
+
+    def <T,S> void prepareRequest(String id, Class<T> domainClass, S domainService) {
+        String domainName = domainClass.getName().split("\\.")[1].toLowerCase()
+        if(request.getMethod() == "POST"){
+            handleRequest(id, null, domainClass, domainService)
+        }else{
+            if (id != 0 && id != null) {
+                T domainObject = domainService.get(id)
+                if(domainObject != null){
+                    handleRequest(id, domainObject, domainClass, domainService)
+                }else{
+                    render(status: 404, text: domainName + " not found")
+                    return
                 }
-                render(status: 200, contentType: "application/json", new JSON(target: User.list()))
+            }else if(request.getMethod() == "GET") {
+                render(status: 200, contentType: "application/json", new JSON(target: domainService.list()))
+            }else{
+                render(status: 400, "for user delete/put use /api/user/{Your "+domainName+" ID}")
+            }
+        }
+    }
+
+    def <T,S,V> void handleRequest(String id, V domainObject, Class<T> domainClass, S domainService){
+        String domainName = domainClass.getName().split("\\.")[1].toLowerCase()
+        switch (request.getMethod()) {
+            case "POST":
+                T t = domainClass.newInstance()
+                t.properties = request.JSON
+                //User u = new User(request.JSON)
+                try{
+                    t = domainService.save(t)
+                }catch(ValidationException e){
+                    render(status: 400, text: "Failed to add " + domainName +" - not valid champs")
+                    return
+                }
+                if (t != null) {
+                    render(status: 201, text: home + domainName + "/" + t.id )
+                } else {
+                    render(status: 400, text: "Failed to add " + domainName +" - not valid champs")
+                }
                 break
 
-            case "POST":
-                User u = new User(request.JSON)
-                u = userService.save(u)
-                if (u != null) {
-                    render(status: 201, text: home + "user/" + u.id )
-                } else {
-                    render(status: 400, text: "Failed to add User - not valid champs")
-                }
+            case "GET":
+                render(status: 200, contentType: "application/json", new JSON(target: domainObject))
                 break
-            
+
             case "PUT":
-                if (id != 0 && id != null) {
-                    User user = userService.get(id)
-                    if (user == null) {
-                        render(status: 404, text: "User not found")
-                    } else {
-                        user.properties = request.JSON
-                        if (user.validate() && userService.save(user)) {
-                            render(status: 200, text: home + "user/" + user.id )
-                        } else {
-                            render(status: 400, text: "Failed to update User - not valid champs")
-                        }
-                    }
-                    break
+                domainObject.properties = request.JSON
+                println(domainObject)
+                if (domainObject.validate() && domainService.save(domainObject)) {
+                    render(status: 200, text: home + domainName+ "/" + domainObject.id )
+                } else {
+                    render(status: 400, text: "Failed to update "+ domainName + " - not valid champs")
                 }
-                render(status: 400, "for user update use /api/user/{Your User ID}")
                 break
+
             case "DELETE":
-                if (id != 0 && id != null) {
-                    User user = userService.get(id)
-                    if (user == null) {
-                        render(status: 404, text: "User not found")
-                    } else {
-                        Long idl = Long.parseLong(id)
-                        myUserService.delete(idl)
-                        render(status: 200)
-                    }
-                    break
-                }
-                render(status: 400, "for user delete use /api/user/{Your User ID}")
+                Long idl = Long.parseLong(id)
+                domainService.delete(idl)
+                render(status: 200)
                 break
 
             default:
