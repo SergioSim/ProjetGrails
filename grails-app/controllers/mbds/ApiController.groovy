@@ -60,16 +60,8 @@ class ApiController {
                     if (user == null) {
                         render(status: 404, text: "User not found")
                     } else {
-                        //TODO REFACTOR Code Dublication!
                         Long idl = Long.parseLong(id)
-                        def ur = UserRole.get(idl,1)
-                        def ur2 = UserRole.get(idl,2)
-                        if(ur){userRoleService.delete(ur)}
-                        if(ur2){userRoleService.delete(ur2)}
-                        userImageService.delete(idl)
-                        myUserService.removeUserMessage(idl)
-                        myUserService.removeUserDeadMatch(idl)
-                        userService.delete(idl)
+                        myUserService.delete(idl)
                         render(status: 200)
                     }
                     break
