@@ -4,6 +4,9 @@ import grails.converters.JSON
 class ApiController {
     String home = "http://localhost:8090/mbds/api/"
     UserService userService
+    UserImageService userImageService
+    MyUserService myUserService
+    UserRoleService userRoleService
 
     def index() {
         render text:"Ohhh"
@@ -40,8 +43,6 @@ class ApiController {
                     if (user == null) {
                         render(status: 404, text: "User not found")
                     } else {
-                        println("properties = " + user.properties)
-                        println("request = " + request.JSON)
                         user.properties = request.JSON
                         if (user.validate() && userService.save(user)) {
                             render(status: 200, text: home + "user/" + user.id )
@@ -52,6 +53,28 @@ class ApiController {
                     break
                 }
                 render(status: 400, "for user update use /api/user/{Your User ID}")
+                break
+            case "DELETE":
+                if (id != 0 && id != null) {
+                    User user = userService.get(id)
+                    if (user == null) {
+                        render(status: 404, text: "User not found")
+                    } else {
+                        //TODO REFACTOR Code Dublication!
+                        Long idl = Long.parseLong(id)
+                        def ur = UserRole.get(idl,1)
+                        def ur2 = UserRole.get(idl,2)
+                        if(ur){userRoleService.delete(ur)}
+                        if(ur2){userRoleService.delete(ur2)}
+                        userImageService.delete(idl)
+                        myUserService.removeUserMessage(idl)
+                        myUserService.removeUserDeadMatch(idl)
+                        userService.delete(idl)
+                        render(status: 200)
+                    }
+                    break
+                }
+                render(status: 400, "for user delete use /api/user/{Your User ID}")
                 break
 
             default:

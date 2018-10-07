@@ -2,6 +2,7 @@ package mbds
 
 import grails.validation.ValidationException
 import org.apache.catalina.core.ApplicationPart
+import org.hibernate.SessionFactory
 import org.springframework.security.access.annotation.Secured
 import org.springframework.security.core.context.SecurityContextHolder
 
@@ -9,6 +10,7 @@ class UserHomeController {
 
     static allowedMethods = [save: "POST", updateImage: "PUT", delete: "DELETE"]
     UserImageService userImageService
+    SessionFactory sessionFactory
 
     @Secured(['ROLE_USER', 'ROLE_ADMIN'])
     def index() {

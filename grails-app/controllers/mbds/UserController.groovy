@@ -13,13 +13,12 @@ class UserController {
 
     UserService userService
     MyUserService myUserService
-    static UserImageService userImageService
+    UserImageService userImageService
     SessionFactory sessionFactory
     RoleService roleService
     UserRoleService userRoleService
 
     static allowedMethods = [save: "POST", update: "PUT"]
-    static mapping = { userImageService cascade : ' all-delete-orphan ' }
 
     @Secured(['ROLE_ADMIN'])
     def index(Integer max) {
