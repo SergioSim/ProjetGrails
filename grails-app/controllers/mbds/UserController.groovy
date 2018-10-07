@@ -54,14 +54,6 @@ class UserController {
 
         try {
             userService.save(user)
-        } catch (ValidationException e) {
-            respond user.errors, view:'create'
-            return
-        }
-        def hibSession = sessionFactory.getCurrentSession()
-        assert hibSession != null
-        hibSession.flush()
-        try {
             def theRole = UserRole.findByUser(user)
             if (theRole == null) {
                 Role role = roleService.get(2)
@@ -115,25 +107,12 @@ class UserController {
             return
         }
 
-        ApplicationPart f = request.getPart("userImageFile")
-        if (f.getSize() != 0) {
-            try {
-                userImageService.delete(user.id)
-                def hibSession = sessionFactory.getCurrentSession()
-                assert hibSession != null
-                hibSession.flush()
-                UserImage ui = new UserImage()
-                ui.imageName = f.getSubmittedFileName()
-                ui.imageType = f.getContentType()
-                ui.imageBytes = f.getInputStream().getBytes()
-                ui.user = userService.get(user.id)
-                ui.id = user.id
-                userImageService.save(ui)
-            } catch (ValidationException e) {
-                println e
-                render "Invalid Image"
-                return
-            }
+        try {
+            myUserService.updateUserImage(user, request.getPart("userImageFile"))
+        }catch (ValidationException e) {
+            println e
+            render "Invalid Image"
+            return
         }
 
         request.withFormat {

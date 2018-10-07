@@ -2,7 +2,11 @@ package mbds
 
 class BootStrap {
 
+    MyUserService myUserService
+
     def init = { servletContext ->
+
+        myUserService.init()
 
         def adminRole = new Role(authority: 'ROLE_ADMIN').save(flush: true, failOnError: true)
         def gamingRole = new Role(authority: 'ROLE_USER').save(flush: true, failOnError: true)

@@ -11,6 +11,7 @@ class UserHomeController {
     static allowedMethods = [save: "POST", updateImage: "PUT", delete: "DELETE"]
     UserImageService userImageService
     SessionFactory sessionFactory
+    MyUserService myUserService
 
     @Secured(['ROLE_USER', 'ROLE_ADMIN'])
     def index() {
@@ -84,26 +85,12 @@ class UserHomeController {
     def updateImage() {
         String currentUserName = SecurityContextHolder.getContext().getAuthentication().getName()
         User user = User.findByUsername(currentUserName)
-        ApplicationPart f = request.getPart("userImageFile")
-        if (f.getSize() != 0) {
-            try {
-                userImageService.delete(user.id)
-                def hibSession = sessionFactory.getCurrentSession()
-                assert hibSession != null
-                hibSession.flush()
-                UserImage ui = new UserImage()
-                ui.imageName = f.getSubmittedFileName()
-                ui.imageType = f.getContentType()
-                ui.imageBytes = f.getInputStream().getBytes()
-                ui.user = user
-                ui.id = user.id
-                userImageService.save(ui)
-            } catch (ValidationException e) {
-                println e
-                render "Invalid Image"
-                return
-            }
-            return "HAHA"
+        try {
+            myUserService.updateUserImage(user, request.getPart("userImageFile"))
+        }catch (ValidationException e) {
+            println e
+            render "Invalid Image"
+            return
         }
     }
 }
