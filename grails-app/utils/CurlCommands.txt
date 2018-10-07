@@ -1,7 +1,7 @@
 LOGIN
 curl -i -H "Accept: application/json" -H "Content-Type: application/json" -d '{"username":"admin","password":"admin"}' http://localhost:8090/mbds/api/login && echo
 
-token=9uqra4ap40c05ngkm4unlsgrma8viplr
+token=f0v5u7dab22a13j9346pkt16tsorhke1
 
 VALIDATE
 curl -i -H "X-Auth-Token: $token" http://localhost:8090/mbds/api/validate && echo
@@ -15,5 +15,13 @@ curl -i -H "X-Auth-Token: $token" -d '{"username":"test", "password":"test"}' -H
 
 GET
 curl -i -H "X-Auth-Token: $token" http://localhost:8090/mbds/api/user && echo
-
 curl -i -H "X-Auth-Token: $token" http://localhost:8090/mbds/api/user/2 && echo
+
+PUT
+curl -i -H "X-Auth-Token: $token" -X PUT -d '{"username":"test2", "password":"test"}' http://localhost:8090/mbds/api/user && echo //error need id
+
+curl -i -H "X-Auth-Token: $token" -X PUT -d '{"username":"test2", "password":"test"}' http://localhost:8090/mbds/api/user/700 && echo //error user not found
+
+curl -i -H "X-Auth-Token: $token" -H "Content-Type: application/json" -X PUT -d '{"username":"", "password":"test"}' http://localhost:8090/mbds/api/user/6 && echo //error not valid champs
+
+curl -i -H "X-Auth-Token: $token" -H "Content-Type: application/json" -X PUT -d '{"username":"test2", "password":"test"}' http://localhost:8090/mbds/api/user/6 && echo
