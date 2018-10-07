@@ -1,0 +1,19 @@
+LOGIN
+curl -i -H "Accept: application/json" -H "Content-Type: application/json" -d '{"username":"admin","password":"admin"}' http://localhost:8090/mbds/api/login && echo
+
+token=9uqra4ap40c05ngkm4unlsgrma8viplr
+
+VALIDATE
+curl -i -H "X-Auth-Token: $token" http://localhost:8090/mbds/api/validate && echo
+
+LOGOUT
+curl -i -H "X-Auth-Token: $token" -X POST http://localhost:8090/mbds/api/logout && echo
+
+
+POST
+curl -i -H "X-Auth-Token: $token" -d '{"username":"test", "password":"test"}' -H "Content-Type: application/json" http://localhost:8090/mbds/api/user && echo
+
+GET
+curl -i -H "X-Auth-Token: $token" http://localhost:8090/mbds/api/user && echo
+
+curl -i -H "X-Auth-Token: $token" http://localhost:8090/mbds/api/user/2 && echo

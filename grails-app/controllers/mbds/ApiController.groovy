@@ -15,11 +15,11 @@ class ApiController {
                     if (user == null) {
                         render(status: 400, text: "User not found")
                     } else {
-                        render(new JSON(target: user))
+                        render(status: 200, contentType: "application/json", new JSON(target: user))
                     }
                     break
                 }
-                render(new JSON(target: User.list()))
+                render(status: 200, contentType: "application/json", new JSON(target: User.list()))
                 break
 
             case "POST":
