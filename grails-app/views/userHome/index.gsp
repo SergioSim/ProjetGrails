@@ -20,10 +20,10 @@
         <img src="${createLink(controller: 'user', action: 'getUserImage', id: theUser.id )}" height="140px" width="140px" />
         <g:set var="myMessagesToOthers" value="${fruitInstanceList}"/>
         <p>Upload image : ...(with drag & drop...)</p>
-        <g:uploadForm controller="userHome" action="updateImage" method="PUT" enctype="multipart/form-data">
+        <form action="http://localhost:8090/mbds/userHome/updateImage" method="PUT" enctype="multipart/form-data" id="the-form">
             <input type="file" name="userImageFile" id="userImageFile" />
             <input type="submit" />
-        </g:uploadForm>
+        </form>
         <div class="nav" role="navigation">
             <ul>
                 <li><g:link controller="message" class="create" action="create">Create Message</g:link></li>
@@ -31,5 +31,26 @@
         </div>
         <p>Your Message outBox: ${theOutBox}</p>
         <p>Your Message inBox: ${theInBox}</p>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // your code here
+            var form = document.getElementById('the-form');
+            console.log(form)
+
+            form.onsubmit = function() {
+                var fileInput = document.getElementById('userImageFile');
+                console.log(fileInput.files[0])
+                var file = fileInput.files[0];
+                var formData = new FormData(form);
+                formData.append('userImageFile', file);
+                var xhr = new XMLHttpRequest();
+                // Add any event handlers here...
+                xhr.open('PUT', form.getAttribute('action'), true);
+                xhr.send(formData);
+
+                return false; // To avoid actual submission of the form
+            }
+        }, false);
+    </script>
     </body>
 </html>

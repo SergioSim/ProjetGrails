@@ -61,9 +61,9 @@ class UserController {
             return
         }
 
+        MultipartFile f = request.getFile("userImageFile")
         if (!f.empty) {
             try {
-                MultipartFile f = request.getFile("userImageFile")
                 myUserService.saveUserImage(user,f)
             } catch (ValidationException e) {
                 render "Invalid Image"
