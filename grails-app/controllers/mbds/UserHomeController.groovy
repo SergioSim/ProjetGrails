@@ -1,7 +1,6 @@
 package mbds
 
 import grails.validation.ValidationException
-import org.hibernate.SessionFactory
 import org.springframework.security.access.annotation.Secured
 import org.springframework.security.core.context.SecurityContextHolder
 
@@ -15,6 +14,7 @@ class UserHomeController {
         String currentUserName = SecurityContextHolder.getContext().getAuthentication().getName()
         String role = SecurityContextHolder.getContext().getAuthentication().getAuthorities().first()
         User user = User.findByUsername(currentUserName)
+        session["userId"]=user.id
         if(role == 'ROLE_USER'){
             render( view: 'index',
                     model: [

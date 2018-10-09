@@ -22,6 +22,7 @@ class MessageController {
 
     @Secured(['ROLE_ADMIN','ROLE_USER'])
     def create() {
+        params.put("theUser",session["userId"])
         respond new Message(params)
     }
     @Secured(['ROLE_ADMIN','ROLE_USER'])
