@@ -2,7 +2,6 @@ package mbds
 
 import grails.gorm.transactions.Transactional
 import grails.validation.ValidationException
-import org.hibernate.SessionFactory
 import org.springframework.security.access.annotation.Secured
 import org.springframework.web.multipart.MultipartFile
 

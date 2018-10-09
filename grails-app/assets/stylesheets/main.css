@@ -91,6 +91,10 @@ img {
     margin-top: 1.5em;
     padding: 1em;
     min-height: 1em;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
 }
 
 .footer a {
