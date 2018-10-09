@@ -84,6 +84,7 @@ class UserHomeController {
         User user = User.findByUsername(currentUserName)
         try {
             myUserService.updateUserImage(user, request.getPart("userImageFile"))
+            render(status: 201)
         }catch (ValidationException e) {
             println e
             render "Invalid Image"

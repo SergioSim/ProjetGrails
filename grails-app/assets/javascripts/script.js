@@ -20,7 +20,6 @@ function uploadFile(file) {
     // Add any event handlers here...
     xhr.open('PUT', form.getAttribute('action'), true);
     xhr.send(formData);
-    return false; // To avoid actual submission of the form
 }
 
 document.addEventListener('DOMContentLoaded', function() {
