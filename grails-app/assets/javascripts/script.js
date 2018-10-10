@@ -54,3 +54,16 @@ document.addEventListener('DOMContentLoaded', function() {
     // your code here
 
     }, false);
+
+    var b = true;
+
+    function messageShow(id) {
+        if(b){
+            document.getElementById(id).className = "aMessageNotHidden";
+            b = false;
+        }else{
+            document.getElementById(id).className = "aMessage";
+            b = true;
+        }
+
+    }

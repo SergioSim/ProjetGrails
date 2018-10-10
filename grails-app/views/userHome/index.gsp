@@ -31,9 +31,10 @@
 </div>
 <p>Your Message outBox: ${theOutBox}</p>
 <g:each in="${theOutBox}" var="theMessage">
-    <div class="userMessage">
+    <div class="userMessage" onclick="messageShow(${theMessage.id})">
         <p>Author : ${theMessage.author.username} Date : ${theMessage.dateCreated}</p>
-        <div>Message : ${theMessage.content}</div>
+        <p>Click to show message!</p>
+        <div class="aMessage" id="${theMessage.id}" >Message : ${theMessage.content}</div>
     </div>
 </g:each>
 <p>Your Message inBox: ${theInBox}</p>
