@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <title>Hello ${theUser.getUsername()}</title>
     <asset:stylesheet src="drag_drop.css"/>
+    <asset:stylesheet src="userMessages.css"/>
 
 </head>
 <body>
@@ -19,7 +20,7 @@
 <p>your id : ${theUser.id}</p>
 <p> your role is : USER_ROLE</p>
 <p>Your image : </p>
-<img src="${createLink(controller: 'user', action: 'getUserImage', id: theUser.id )}" height="140px" width="140px" />
+<img src="${createLink(controller: 'user', action: 'getUserImage', id: theUser.id )}" id="theImage" height="140px" width="140px" />
 <g:set var="myMessagesToOthers" value="${fruitInstanceList}"/>
 <p>Upload image : ...(with drag & drop...)</p>
 
@@ -29,6 +30,12 @@
     </ul>
 </div>
 <p>Your Message outBox: ${theOutBox}</p>
+<g:each in="${theOutBox}" var="theMessage">
+    <div class="userMessage">
+        <p>Author : ${theMessage.author.username} Date : ${theMessage.dateCreated}</p>
+        <div>Message : ${theMessage.content}</div>
+    </div>
+</g:each>
 <p>Your Message inBox: ${theInBox}</p>
 <div id="drop-area">
     <form action="http://localhost:8090/mbds/userHome/updateImage" method="PUT" enctype="multipart/form-data" id="the-form" class="my-form">

@@ -11,12 +11,17 @@ function handleDrop(e) {
 
 function uploadFile(file) {
 
-    var form = document.getElementById('the-form');
+    let form = document.getElementById('the-form');
     console.log(form)
-    var formData = new FormData();
+    let formData = new FormData();
     console.log(file)
     formData.append('userImageFile', file);
-    var xhr = new XMLHttpRequest();
+    let xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == XMLHttpRequest.DONE) {
+            document.getElementById('theImage').src = document.getElementById('theImage').src + "?"+new Date().getTime();
+        }
+    };
     // Add any event handlers here...
     xhr.open('PUT', form.getAttribute('action'), true);
     xhr.send(formData);
@@ -35,7 +40,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     ;['dragleave', 'drop'].forEach(eventName => {
         dropArea.addEventListener(eventName, unhighlight, false)
-    })
+    });
 
     function highlight(e) {
         dropArea.classList.add('highlight')
