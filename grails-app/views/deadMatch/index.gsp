@@ -18,7 +18,7 @@
             <g:if test="${flash.message}">
                 <div class="message" role="status">${flash.message}</div>
             </g:if>
-            <f:table collection="${deadMatchList}" properties="['winner','looser','winnerScore','looserScore','dateCreated']" />
+            <f:table collection="${deadMatchList}" properties="['id','winner','looser','winnerScore','looserScore','dateCreated']" />
             <div class="pagination">
                 <g:paginate total="${deadMatchCount ?: 0}" />
             </div>
