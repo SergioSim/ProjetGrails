@@ -18,3 +18,6 @@ if (typeof jQuery !== 'undefined') {
         });
     })(jQuery);
 }
+function refresh(){
+    setTimeout("javascript:location.reload();",1000);
+}

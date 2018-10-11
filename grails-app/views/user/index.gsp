@@ -34,7 +34,7 @@
                                 </g:link>
                             </div>
 
-                            <div class="d2"><g:link controller="user" action="delete" id="${j.id}">Delete</g:link></div>
+                            <div class="d2" ><g:link controller="user" action="delete" id="${j.id}" onclick="refresh();" >Delete</g:link></div>
                             <div class="d3"><g:link controller="user" action="edit" id="${j.id}">Edit</g:link></div>
                         </div>
 
