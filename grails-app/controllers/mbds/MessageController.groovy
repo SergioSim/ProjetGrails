@@ -2,6 +2,7 @@ package mbds
 
 import grails.validation.ValidationException
 import org.springframework.security.access.annotation.Secured
+import org.springframework.security.core.context.SecurityContextHolder
 
 import static org.springframework.http.HttpStatus.*
 
@@ -59,18 +60,42 @@ class MessageController {
         }
 
         try {
-            messageService.save(message)
+            messageService.save(theMessage)
         } catch (ValidationException e) {
-            respond message.errors, view:'edit'
+            respond theMessage.errors, view:'edit'
             return
         }
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'message.label', default: 'Message'), message.id])
-                redirect message
+                flash.message = message(code: 'default.updated.message', args: [message(code: 'message.label', default: 'Message'), theMessage.id])
+                redirect theMessage
             }
-            '*'{ respond message, [status: OK] }
+            '*'{ respond theMessage, [status: OK] }
+        }
+    }
+
+    @Secured(['ROLE_ADMIN','ROLE_USER'])
+    def read(Long id){
+        Message theMessage = messageService.get(id)
+        if (theMessage == null) {
+            notFound()
+            return
+        }
+        String role = SecurityContextHolder.getContext().getAuthentication().getAuthorities().first()
+        if(role == 'ROLE_USER') {
+            if(theMessage.target.id == session["userId"]) {
+                theMessage.lu = true
+            }else{
+                render(status: 401)
+                return
+            }
+        }
+        try {
+            messageService.save(theMessage)
+        } catch (ValidationException e) {
+            respond theMessage.errors, view:'edit'
+            return
         }
     }
 
