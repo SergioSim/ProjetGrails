@@ -45,46 +45,18 @@
                         </div>
                      </g:each>
                 <p>Your Message inBox: ${theInBox}</p>
+                    <g:each in="${theInBox}" var="theMessage">
+                        <div class="userMessage" onclick="messageShow(${theMessage.id})">
+                            <p>Author : ${theMessage.author.username} Date : ${theMessage.dateCreated}</p>
+                            <p>Click to show message!</p>
+                            <div class="aMessage" id="${theMessage.id}" >Message : ${theMessage.content}</div>
+                        </div>
+                    </g:each>
+
 
         </div>
     </div>
     <asset:javascript src="jquery-3.0.0.js"/>
     <asset:javascript src="script.js"/>
-<style>
-    .bloc-principal{
-        margin-top: 35px;
-    }
-    .bloc-image {
-        width:30%;
-        margin-left: 125px;
-        display: inline-block;
-        vertical-align: top;
-    }
-    .bloc-message{
-        width:60%;
-        display: inline-block;
-        vertical-align: top;
-
-    }
-    .paragraphe{
-        margin-top: 15px;
-    }
-    .userMessage {
-        width: 100%;
-        margin-bottom: 3px;
-        height: 110px;
-        border-style: solid;
-    }
-
-    .aMessage {
-        width: 95%;
-        visibility: hidden;
-    }
-
-    .aMessageNotHidden{
-        width: 100%;
-        background-color: #3c763d;
-    }
-</style>
 </body>
 </html>

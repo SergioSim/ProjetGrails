@@ -6896,3 +6896,39 @@ utilisateur p {
 .contener {
   left:150px;
 }
+
+.bloc-principal{
+  margin-top: 35px;
+  margin-bottom: 30px;
+
+}
+.bloc-image {
+  width:30%;
+  margin-left: 125px;
+  display: inline-block;
+  vertical-align: top;
+}
+.bloc-message{
+  width:60%;
+  display: inline-block;
+  vertical-align: top;
+}
+.paragraphe{
+  margin-top: 15px;
+}
+.userMessage {
+  width: 100%;
+  margin-bottom: 3px;
+  height: 110px;
+  border-style: solid;
+}
+
+.aMessage {
+  width: 95%;
+  visibility: hidden;
+}
+
+.aMessageNotHidden{
+  width: 100%;
+  background-color: #3c763d;
+}
