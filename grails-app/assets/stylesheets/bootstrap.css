@@ -4502,7 +4502,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
     margin-right: 0;
   }
 }
-.navbar-default {
+.navbar-defaul{
   background-color: #f8f8f8;
   border-color: #e7e7e7;
 }
@@ -6838,11 +6838,11 @@ utilisateur p {
 }
 .d1{
   width: 33%;
-  height: 26px;
+  height: 24px;
   background:gainsboro;
 
   border: 2px solid gray;
-    border-radius: 5px;ition-duration: 0.4s; /* Safari */
+  border-radius: 5px;ition-duration: 0.4s; /* Safari */
   transition-duration: 0.4s;
   float: left;
 }
@@ -6852,11 +6852,10 @@ utilisateur p {
 }
 .d2{
   width: 33%;
-  height: 26px;
+  height: 24px;
   background: #5bc0de;
   border: 2px solid gray;
   border-radius: 5px;
-  text-align: center;
   float: left;
 }
 .d2:hover {
@@ -6865,11 +6864,10 @@ utilisateur p {
 }
 .d3{
   width: 34%;
-  height: 26px;
+  height: 24px;
   background-color: #5bc0de;
   border: 2px solid gray;
   border-radius: 5px;
-  text-align: center;
   float: left;
 }
 
@@ -6881,14 +6879,11 @@ utilisateur p {
   width: 45px;
   height: 25px;
   margin-left: 2px;
-
-
 }
-.logo-utlisateur{
 
+.logo-utlisateur{
   width: 15px;
   height: 25px;
-
 }
 
 .box__dragndrop,
@@ -6896,4 +6891,8 @@ utilisateur p {
 .box__success,
 .box__error {
     display: none;
+}
+
+.contener {
+  left:150px;
 }
