@@ -6908,6 +6908,10 @@ utilisateur p {
   display: inline-block;
   vertical-align: top;
 }
+.bloc-image img {
+  height:140px;
+  width:140px;
+}
 .bloc-message{
   width:60%;
   display: inline-block;

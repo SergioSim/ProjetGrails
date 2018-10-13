@@ -20,7 +20,7 @@
     <div class="bloc-image">
                     <h1>Welcome ${theUser.getUsername()}</h1>
                     <p>Your image : </p>
-                    <img src="${createLink(controller: 'user', action: 'getUserImage', id: theUser.id )}" id="theImage" height="140px" width="140px" />
+                    <img src="${createLink(controller: 'user', action: 'getUserImage', id: theUser.id )}" id="theImage"/>
                     <g:set var="myMessagesToOthers" value="${fruitInstanceList}"/>
         <p class="paragraphe">Upload image : ...(with drag & drop...)</p>
         <div id="drop-area">
@@ -52,7 +52,6 @@
                             <div class="aMessage" id="${theMessage.id}" >Message : ${theMessage.content}</div>
                         </div>
                     </g:each>
-
 
         </div>
     </div>

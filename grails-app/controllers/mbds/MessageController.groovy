@@ -18,6 +18,9 @@ class MessageController {
     }
 
     def show(Long id) {
+        Message inter=messageService.get(id)
+        inter.lu=true
+        messageService.save(inter)
         respond messageService.get(id)
     }
 
