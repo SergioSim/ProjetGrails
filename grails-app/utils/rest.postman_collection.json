@@ -1,0 +1,1668 @@
+{
+	"info": {
+		"_postman_id": "bfb1cf12-d771-4648-9def-8f8097e4f3a1",
+		"name": "rest",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "wrong password / login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "1292bfae-2775-4761-97bc-febfe1594057",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"login response must respond Unauthorized 401\", function () {",
+							"     pm.response.to.have.status(401); ",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"username\":\"admin\",\"password\":\"wrong password\"}"
+				},
+				"url": {
+					"raw": "http://localhost:8090/mbds/api/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"mbds",
+						"api",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5033d3d9-429b-4ba8-8084-6546a7a8b561",
+						"type": "text/javascript",
+						"exec": [
+							"const res = pm.response.json()",
+							"pm.environment.set(\"access_token\",res.access_token);",
+							"",
+							"pm.test(\"login response must be valid and have a body\", function () {",
+							"     // assert that the status code is 200",
+							"     pm.response.to.be.ok; // info, success, redirection, clientError,  serverError, are other variants",
+							"     // assert that the response has a valid JSON body",
+							"     pm.response.to.be.withBody;",
+							"     pm.response.to.be.json; // this assertion also checks if a body  exists, so the above check is not needed",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"username\":\"admin\",\"password\":\"admin\"}"
+				},
+				"url": {
+					"raw": "http://localhost:8090/mbds/api/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"mbds",
+						"api",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "validate bad token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2dbf934e-c5d0-48d8-bb1d-f212dd9c57be",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"validate response must respond Unauthorized 401\", function () {",
+							"    pm.response.to.have.status(401); ",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-Auth-Token",
+						"value": "someWrongToken"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8090/mbds/api/validate",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"mbds",
+						"api",
+						"validate"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "validate valid token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0edff0c2-8d1f-4090-bcfa-8e5746f1c09e",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"validate response must respond OK 200 and have a json body\", function () {",
+							"    pm.response.to.have.status(200); ",
+							"    // assert that the response has a valid JSON body",
+							"     pm.response.to.be.withBody;",
+							"     pm.response.to.be.json; // this assertion also checks if a body  exists, so the above check is not needed",
+							"    ",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-Auth-Token",
+						"value": "{{access_token}}"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8090/mbds/api/validate",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"mbds",
+						"api",
+						"validate"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "valid user get id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e8adb622-c53e-49f1-8bba-fd68cd354f9d",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"response must be valid\", function () {",
+							"     // assert that the status code is 200",
+							"     pm.response.to.have.status(200); // info, success, redirection, clientError,  serverError,",
+							"});",
+							"",
+							"pm.test(\"response must have body\", function () {",
+							"     pm.response.to.be.withBody;",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "X-Auth-Token",
+						"value": " {{access_token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"username\":\"test3\", \"password\":\"newtest\"}"
+				},
+				"url": {
+					"raw": "localhost:8090/mbds/api/user/3",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"mbds",
+						"api",
+						"user",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "valid user get list",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4a75db6a-d2b4-43c0-906c-e184390267c6",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"response must be valid and have a body\", function () {",
+							"     // assert that the status code is 200",
+							"     pm.response.to.have.status(200); // info, success, redirection, clientError,  serverError,",
+							"});",
+							"",
+							"pm.test(\"response must have body\", function () {",
+							"     pm.response.to.be.withBody;",
+							"});",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "X-Auth-Token",
+						"value": " {{access_token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"username\":\"test3\", \"password\":\"newtest\"}"
+				},
+				"url": {
+					"raw": "localhost:8090/mbds/api/user",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"mbds",
+						"api",
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "not valid user get (not existing user)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e7891a8d-4f7b-4483-95b8-bbc201ee91fd",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"response must be 404\", function () {",
+							"     // assert that the status code is 200",
+							"     pm.response.to.have.status(404); // info, success, redirection, clientError,  serverError,",
+							"});",
+							"",
+							"pm.test(\"response must have body\", function () {",
+							"     pm.response.to.be.withBody;",
+							"});",
+							"",
+							"pm.test(\"response must match the body\", function () {",
+							"     pm.expect(pm.response.text()).to.include(\"user not found\");",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "X-Auth-Token",
+						"value": " {{access_token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"username\":\"test3\", \"password\":\"newtest\"}"
+				},
+				"url": {
+					"raw": "localhost:8090/mbds/api/user/1000",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"mbds",
+						"api",
+						"user",
+						"1000"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "not valid user get (bad id)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e7891a8d-4f7b-4483-95b8-bbc201ee91fd",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"response must be 404\", function () {",
+							"     // assert that the status code is 200",
+							"     pm.response.to.have.status(404); // info, success, redirection, clientError,  serverError,",
+							"});",
+							"",
+							"pm.test(\"response must have body\", function () {",
+							"     pm.response.to.be.withBody;",
+							"});",
+							"",
+							"pm.test(\"response must match the body\", function () {",
+							"     pm.expect(pm.response.text()).to.include(\"user not found\");",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "X-Auth-Token",
+						"value": " {{access_token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"username\":\"test3\", \"password\":\"newtest\"}"
+				},
+				"url": {
+					"raw": "localhost:8090/mbds/api/user/somethingWrong",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"mbds",
+						"api",
+						"user",
+						"somethingWrong"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "valid user post",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e237cb1f-aecd-44ee-8667-d435137a38fe",
+						"type": "text/javascript",
+						"exec": [
+							"id = pm.globals.set(\"userId\", responseBody.split(\"/\")[6]);",
+							"",
+							"pm.test(\"response must be valid\", function () {",
+							"     pm.response.to.have.status(201); ",
+							"});",
+							"",
+							"pm.test(\"response must have body\", function () {",
+							"     pm.response.to.be.withBody;",
+							"});",
+							"",
+							"pm.test(\"response must match the body\", function () {",
+							"     pm.expect(pm.response.text()).to.include(\"http://localhost:8090/mbds/api/user/\");",
+							"});"
+						]
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "d2cc1151-28ff-4b0f-a817-5309fcb01bf0",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "X-Auth-Token",
+						"value": " {{access_token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"username\":\"test2\", \"password\":\"test\"}"
+				},
+				"url": {
+					"raw": "http://localhost:8090/mbds/api/user",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"mbds",
+						"api",
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "not valid user post (existing username)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c5f679c2-2ea8-444a-9e10-24b79699a09c",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"response must be 400 Bad Request\", function () {",
+							"     pm.response.to.have.status(400); ",
+							"});",
+							"",
+							"pm.test(\"response must have body\", function () {",
+							"     pm.response.to.be.withBody;",
+							"});",
+							"",
+							"pm.test(\"response must match the body\", function () {",
+							"     pm.expect(pm.response.text()).to.include(\"Failed to add user - not valid champs\");",
+							"});"
+						]
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "d2cc1151-28ff-4b0f-a817-5309fcb01bf0",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "X-Auth-Token",
+						"value": " {{access_token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"username\":\"admin\", \"password\":\"test\"}"
+				},
+				"url": {
+					"raw": "http://localhost:8090/mbds/api/user",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"mbds",
+						"api",
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "not valid user post (wrong champs)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c5f679c2-2ea8-444a-9e10-24b79699a09c",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"response must be 400 Bad Request\", function () {",
+							"     pm.response.to.have.status(400); ",
+							"});",
+							"",
+							"pm.test(\"response must have body\", function () {",
+							"     pm.response.to.be.withBody;",
+							"});",
+							"",
+							"pm.test(\"response must match the body\", function () {",
+							"     pm.expect(pm.response.text()).to.include(\"Failed to add user - not valid champs\");",
+							"});"
+						]
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "d2cc1151-28ff-4b0f-a817-5309fcb01bf0",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "X-Auth-Token",
+						"value": " {{access_token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"somethingWorng\":\"admin\", \"password\":\"test\"}"
+				},
+				"url": {
+					"raw": "http://localhost:8090/mbds/api/user",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"mbds",
+						"api",
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "valid user delete",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ec2b83b0-7789-4492-b494-506565918ba1",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"response must be valid and have a body\", function () {",
+							"     // assert that the status code is 200",
+							"     pm.response.to.have.status(200); // info, success, redirection, clientError,  serverError,",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "X-Auth-Token",
+						"value": " {{access_token}}"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8090/mbds/api/user/{{userId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"mbds",
+						"api",
+						"user",
+						"{{userId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "not valid user delete (no id)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "162b9b06-e391-43e9-977c-a7131aebb990",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"response must be 400y\", function () {",
+							"     // assert that the status code is 200",
+							"     pm.response.to.have.status(400); // info, success, redirection, clientError,  serverError,",
+							"});",
+							"",
+							"pm.test(\"response must have body\", function () {",
+							"     pm.response.to.be.withBody;",
+							"});",
+							"",
+							"pm.test(\"response must match the body\", function () {",
+							"     pm.expect(pm.response.text()).to.include(\"for user delete/put use /api/user/{Your user ID}\");",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "X-Auth-Token",
+						"value": " {{access_token}}"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8090/mbds/api/user",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"mbds",
+						"api",
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "not valid user delete (not existing user)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "95183bc5-6b40-4766-ac15-2284ea2ba083",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"response must be 404 User not found\", function () {",
+							"     pm.response.to.have.status(404);",
+							"});",
+							"",
+							"pm.test(\"response must have body\", function () {",
+							"     pm.response.to.be.withBody;",
+							"});",
+							"",
+							"pm.test(\"response must match the body\", function () {",
+							"     pm.expect(pm.response.text()).to.include(\"user not found\");",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "X-Auth-Token",
+						"value": " {{access_token}}"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8090/mbds/api/user/1000",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"mbds",
+						"api",
+						"user",
+						"1000"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "valid user put",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f8d31af8-7d60-4ee7-843a-dbacd468f306",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"response must be valid and have a body\", function () {",
+							"     // assert that the status code is 200",
+							"     pm.response.to.have.status(200); // info, success, redirection, clientError,  serverError,",
+							"});",
+							"",
+							"pm.test(\"response must have body\", function () {",
+							"     pm.response.to.be.withBody;",
+							"});",
+							"",
+							"pm.test(\"response must match the body\", function () {",
+							"     pm.expect(pm.response.text()).to.include(\"http://localhost:8090/mbds/api/user/\");",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "X-Auth-Token",
+						"value": " {{access_token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"username\":\"test3\", \"password\":\"newtest\"}"
+				},
+				"url": {
+					"raw": "localhost:8090/mbds/api/user/3",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"mbds",
+						"api",
+						"user",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "not valid user put (no id)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "795f1098-8bb3-42f2-9841-47a930bd3a4a",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"response must be 400\", function () {",
+							"     // assert that the status code is 200",
+							"     pm.response.to.have.status(400); // info, success, redirection, clientError,  serverError,",
+							"});",
+							"",
+							"pm.test(\"response must have body\", function () {",
+							"     pm.response.to.be.withBody;",
+							"});",
+							"",
+							"pm.test(\"response must match the body\", function () {",
+							"     pm.expect(pm.response.text()).to.include(\"for user delete/put use /api/user/{Your user ID}\");",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "X-Auth-Token",
+						"value": " {{access_token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:8090/mbds/api/user",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"mbds",
+						"api",
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "not valid user put (not existing user)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "18b0d2d0-b9ce-486b-9e10-ee7a8bae0862",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"response must be 404\", function () {",
+							"     // assert that the status code is 200",
+							"     pm.response.to.have.status(404); // info, success, redirection, clientError,  serverError,",
+							"});",
+							"",
+							"pm.test(\"response must have body\", function () {",
+							"     pm.response.to.be.withBody;",
+							"});",
+							"",
+							"pm.test(\"response must match the body\", function () {",
+							"     pm.expect(pm.response.text()).to.include(\"user not found\");",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "X-Auth-Token",
+						"value": " {{access_token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:8090/mbds/api/user/1000",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"mbds",
+						"api",
+						"user",
+						"1000"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "valid deadmatch get id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e8adb622-c53e-49f1-8bba-fd68cd354f9d",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"response must be valid\", function () {",
+							"     // assert that the status code is 200",
+							"     pm.response.to.have.status(200); // info, success, redirection, clientError,  serverError,",
+							"});",
+							"",
+							"pm.test(\"response must have body\", function () {",
+							"     pm.response.to.be.withBody;",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "X-Auth-Token",
+						"value": " {{access_token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"username\":\"test3\", \"password\":\"newtest\"}"
+				},
+				"url": {
+					"raw": "localhost:8090/mbds/api/deadmatch/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"mbds",
+						"api",
+						"deadmatch",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "valid deadmatch get list",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4a75db6a-d2b4-43c0-906c-e184390267c6",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"response must be valid and have a body\", function () {",
+							"     // assert that the status code is 200",
+							"     pm.response.to.have.status(200); // info, success, redirection, clientError,  serverError,",
+							"});",
+							"",
+							"pm.test(\"response must have body\", function () {",
+							"     pm.response.to.be.withBody;",
+							"});",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "X-Auth-Token",
+						"value": " {{access_token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"username\":\"test3\", \"password\":\"newtest\"}"
+				},
+				"url": {
+					"raw": "localhost:8090/mbds/api/deadmatch",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"mbds",
+						"api",
+						"deadmatch"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "not valid deadmatch get (not existing deadmatch)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2d7958d4-751e-4977-ac70-e8242aa227a6",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"response must be 404\", function () {",
+							"     // assert that the status code is 200",
+							"     pm.response.to.have.status(404); // info, success, redirection, clientError,  serverError,",
+							"});",
+							"",
+							"pm.test(\"response must have body\", function () {",
+							"     pm.response.to.be.withBody;",
+							"});",
+							"",
+							"pm.test(\"response must match the body\", function () {",
+							"     pm.expect(pm.response.text()).to.include(\"deadmatch not found\");",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "X-Auth-Token",
+						"value": " {{access_token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"username\":\"test3\", \"password\":\"newtest\"}"
+				},
+				"url": {
+					"raw": "localhost:8090/mbds/api/deadmatch/1000",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"mbds",
+						"api",
+						"deadmatch",
+						"1000"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "not valid deadmatch get (bad id)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7b2c3ab4-fb16-4ff9-a79f-28cc05894cfd",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"response must be 404\", function () {",
+							"     // assert that the status code is 200",
+							"     pm.response.to.have.status(404); // info, success, redirection, clientError,  serverError,",
+							"});",
+							"",
+							"pm.test(\"response must have body\", function () {",
+							"     pm.response.to.be.withBody;",
+							"});",
+							"",
+							"pm.test(\"response must match the body\", function () {",
+							"     pm.expect(pm.response.text()).to.include(\"deadmatch not found\");",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "X-Auth-Token",
+						"value": " {{access_token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"username\":\"test3\", \"password\":\"newtest\"}"
+				},
+				"url": {
+					"raw": "localhost:8090/mbds/api/deadmatch/somethingWrong",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"mbds",
+						"api",
+						"deadmatch",
+						"somethingWrong"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "valid deadmatch post",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0001d5f1-eddc-45d0-a858-e33ebf9cc8f1",
+						"type": "text/javascript",
+						"exec": [
+							"id = pm.globals.set(\"userId\", responseBody.split(\"/\")[6]);",
+							"",
+							"pm.test(\"response must be valid\", function () {",
+							"     pm.response.to.have.status(201); ",
+							"});",
+							"",
+							"pm.test(\"response must have body\", function () {",
+							"     pm.response.to.be.withBody;",
+							"});",
+							"",
+							"pm.test(\"response must match the body\", function () {",
+							"     pm.expect(pm.response.text()).to.include(\"http://localhost:8090/mbds/api/deadmatch/\");",
+							"});"
+						]
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "d2cc1151-28ff-4b0f-a817-5309fcb01bf0",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "X-Auth-Token",
+						"value": " {{access_token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"winner\":{\"id\":1,\"dateCreated\":\"2018-10-07T22:06:17Z\",\"passwordExpired\":false,\"username\":\"admin\",\"accountLocked\":false,\"password\":\"$2a$10$dP9eTt6BXF3lclyLua/UaeNiUoBEbXAfdBubO04/uN/mdTPMkSEEy\",\"accountExpired\":false,\"enabled\":true}, \"looser\":{\"id\":2,\"dateCreated\":\"2018-10-07T22:06:17Z\",\"passwordExpired\":false,\"username\":\"playerUser\",\"accountLocked\":false,\"password\":\"$2a$10$kqQ1MAMDpDBe1ug1LrrKx.2MVsd3Tft.u3ptYAB6tHHoherzQZ8gm\",\"accountExpired\":false,\"enabled\":true}, \"winnerScore\":\"100\", \"looserScore\":\"2\"}"
+				},
+				"url": {
+					"raw": "http://localhost:8090/mbds/api/deadmatch",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"mbds",
+						"api",
+						"deadmatch"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "not valid deadmatch post (missing champs)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "cbeed5d4-f4c2-450a-9928-27beee821d42",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"response must be 400 Bad Request\", function () {",
+							"     pm.response.to.have.status(400); ",
+							"});",
+							"",
+							"pm.test(\"response must have body\", function () {",
+							"     pm.response.to.be.withBody;",
+							"});",
+							"",
+							"pm.test(\"response must match the body\", function () {",
+							"     pm.expect(pm.response.text()).to.include(\"Failed to add deadmatch - not valid champs\");",
+							"});"
+						]
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "d2cc1151-28ff-4b0f-a817-5309fcb01bf0",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "X-Auth-Token",
+						"value": " {{access_token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"winner\":{\"id\":1,\"passwordExpired\":false,\"username\":\"admin\",\"accountLocked\":false,\"password\":\"$2a$10$dP9eTt6BXF3lclyLua/UaeNiUoBEbXAfdBubO04/uN/mdTPMkSEEy\",\"accountExpired\":false,\"enabled\":true}, \"winnerScore\":\"100\", \"looserScore\":\"2\"}"
+				},
+				"url": {
+					"raw": "http://localhost:8090/mbds/api/deadmatch",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"mbds",
+						"api",
+						"deadmatch"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "not valid deadmatch post (not existing user)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ea32b4d2-7132-4b5f-9b0d-bf603c67660d",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"response must be 400 Bad Request\", function () {",
+							"     pm.response.to.have.status(400); ",
+							"});",
+							"",
+							"pm.test(\"response must have body\", function () {",
+							"     pm.response.to.be.withBody;",
+							"});",
+							"",
+							"pm.test(\"response must match the body\", function () {",
+							"     pm.expect(pm.response.text()).to.include(\"Failed to add deadmatch - not valid champs\");",
+							"});"
+						]
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "d2cc1151-28ff-4b0f-a817-5309fcb01bf0",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "X-Auth-Token",
+						"value": " {{access_token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"winner\":{\"id\":1000,\"dateCreated\":\"2018-10-07T22:06:17Z\",\"passwordExpired\":false,\"username\":\"admin\",\"accountLocked\":false,\"password\":\"$2a$10$dP9eTt6BXF3lclyLua/UaeNiUoBEbXAfdBubO04/uN/mdTPMkSEEy\",\"accountExpired\":false,\"enabled\":true}, \"looser\":{\"id\":2,\"dateCreated\":\"2018-10-07T22:06:17Z\",\"passwordExpired\":false,\"username\":\"playerUser\",\"accountLocked\":false,\"password\":\"$2a$10$kqQ1MAMDpDBe1ug1LrrKx.2MVsd3Tft.u3ptYAB6tHHoherzQZ8gm\",\"accountExpired\":false,\"enabled\":true}, \"winnerScore\":\"100\", \"looserScore\":\"2\"}"
+				},
+				"url": {
+					"raw": "http://localhost:8090/mbds/api/deadmatch",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"mbds",
+						"api",
+						"deadmatch"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "valid deadmatch delete",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ec2b83b0-7789-4492-b494-506565918ba1",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"response must be valid and have a body\", function () {",
+							"     // assert that the status code is 200",
+							"     pm.response.to.have.status(200); // info, success, redirection, clientError,  serverError,",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "X-Auth-Token",
+						"value": " {{access_token}}"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8090/mbds/api/user/{{userId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"mbds",
+						"api",
+						"user",
+						"{{userId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "not valid deadmatch delete (no id)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "1e0a746b-ebf9-4bce-ae89-598b7a14c05a",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"response must be 400y\", function () {",
+							"     // assert that the status code is 200",
+							"     pm.response.to.have.status(400); // info, success, redirection, clientError,  serverError,",
+							"});",
+							"",
+							"pm.test(\"response must have body\", function () {",
+							"     pm.response.to.be.withBody;",
+							"});",
+							"",
+							"pm.test(\"response must match the body\", function () {",
+							"     pm.expect(pm.response.text()).to.include(\"for deadmatch delete/put use /api/deadmatch/{Your deadmatch ID}\");",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "X-Auth-Token",
+						"value": " {{access_token}}"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8090/mbds/api/deadmatch",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"mbds",
+						"api",
+						"deadmatch"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "not valid deadmatch delete (not existing deadmatch)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "bea4b974-dfb2-4730-8c74-a050784d9ccd",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"response must be 404 User not found\", function () {",
+							"     pm.response.to.have.status(404);",
+							"});",
+							"",
+							"pm.test(\"response must have body\", function () {",
+							"     pm.response.to.be.withBody;",
+							"});",
+							"",
+							"pm.test(\"response must match the body\", function () {",
+							"     pm.expect(pm.response.text()).to.include(\"deadmatch not found\");",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "X-Auth-Token",
+						"value": " {{access_token}}"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8090/mbds/api/deadmatch/1000",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"mbds",
+						"api",
+						"deadmatch",
+						"1000"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "valid deadmatch put",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "80d3e2e6-b8da-4611-adf8-b1990a7f91eb",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"response must be valid and have a body\", function () {",
+							"     // assert that the status code is 200",
+							"     pm.response.to.have.status(200); // info, success, redirection, clientError,  serverError,",
+							"});",
+							"",
+							"pm.test(\"response must have body\", function () {",
+							"     pm.response.to.be.withBody;",
+							"});",
+							"",
+							"pm.test(\"response must match the body\", function () {",
+							"     pm.expect(pm.response.text()).to.include(\"http://localhost:8090/mbds/api/deadmatch/\");",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "X-Auth-Token",
+						"value": " {{access_token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"winnerScore\":\"1000\"}"
+				},
+				"url": {
+					"raw": "localhost:8090/mbds/api/deadmatch/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"mbds",
+						"api",
+						"deadmatch",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "not valid deadmatch put (no id)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e5c3cd62-9cc9-406b-8ff6-22bee90d3066",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"response must be 400\", function () {",
+							"     // assert that the status code is 200",
+							"     pm.response.to.have.status(400); // info, success, redirection, clientError,  serverError,",
+							"});",
+							"",
+							"pm.test(\"response must have body\", function () {",
+							"     pm.response.to.be.withBody;",
+							"});",
+							"",
+							"pm.test(\"response must match the body\", function () {",
+							"     pm.expect(pm.response.text()).to.include(\"for deadmatch delete/put use /api/deadmatch/{Your deadmatch ID}\");",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "X-Auth-Token",
+						"value": " {{access_token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:8090/mbds/api/deadmatch",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"mbds",
+						"api",
+						"deadmatch"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "not valid deadmatch put (not existing user)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "96c16ba3-1be8-40a1-982e-59f5a4c79bc0",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"response must be 404\", function () {",
+							"     // assert that the status code is 200",
+							"     pm.response.to.have.status(404); // info, success, redirection, clientError,  serverError,",
+							"});",
+							"",
+							"pm.test(\"response must have body\", function () {",
+							"     pm.response.to.be.withBody;",
+							"});",
+							"",
+							"pm.test(\"response must match the body\", function () {",
+							"     pm.expect(pm.response.text()).to.include(\"deadmatch not found\");",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "X-Auth-Token",
+						"value": " {{access_token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:8090/mbds/api/deadmatch/1000",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"mbds",
+						"api",
+						"deadmatch",
+						"1000"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

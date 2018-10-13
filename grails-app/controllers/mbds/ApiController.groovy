@@ -1,6 +1,7 @@
 package mbds
 import grails.converters.JSON
 import grails.validation.ValidationException
+import org.grails.web.converters.exceptions.ConverterException
 
 class ApiController {
     String home = "http://localhost:8090/mbds/api/"
@@ -40,7 +41,7 @@ class ApiController {
             }else if(request.getMethod() == "GET") {
                 render(status: 200, contentType: "application/json", new JSON(target: domainService.list()))
             }else{
-                render(status: 400, "for user delete/put use /api/user/{Your "+domainName+" ID}")
+                render(status: 400, "for " +domainName+ " delete/put use /api/" +domainName+ "/{Your "+domainName+" ID}")
             }
         }
     }
@@ -50,7 +51,12 @@ class ApiController {
         switch (request.getMethod()) {
             case "POST":
                 T t = domainClass.newInstance()
-                t.properties = request.JSON
+                try {
+                    t.properties = request.JSON
+                }catch(ConverterException e){
+                    render(status: 400, text: "Failed to update "+ domainName + " - not valid champs")
+                    return
+                }
                 //User u = new User(request.JSON)
                 try{
                     t = domainService.save(t)
@@ -70,7 +76,12 @@ class ApiController {
                 break
 
             case "PUT":
-                domainObject.properties = request.JSON
+                try {
+                    domainObject.properties = request.JSON
+                }catch(ConverterException e){
+                    render(status: 400, text: "Failed to update "+ domainName + " - not valid champs")
+                    return
+                }
                 println(domainObject)
                 if (domainObject.validate() && domainService.save(domainObject)) {
                     render(status: 200, text: home + domainName+ "/" + domainObject.id )
