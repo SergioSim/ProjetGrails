@@ -1201,7 +1201,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\"winner\":{\"id\":1,\"dateCreated\":\"2018-10-07T22:06:17Z\",\"passwordExpired\":false,\"username\":\"admin\",\"accountLocked\":false,\"password\":\"$2a$10$dP9eTt6BXF3lclyLua/UaeNiUoBEbXAfdBubO04/uN/mdTPMkSEEy\",\"accountExpired\":false,\"enabled\":true}, \"looser\":{\"id\":2,\"dateCreated\":\"2018-10-07T22:06:17Z\",\"passwordExpired\":false,\"username\":\"playerUser\",\"accountLocked\":false,\"password\":\"$2a$10$kqQ1MAMDpDBe1ug1LrrKx.2MVsd3Tft.u3ptYAB6tHHoherzQZ8gm\",\"accountExpired\":false,\"enabled\":true}, \"winnerScore\":\"100\", \"looserScore\":\"2\"}"
+					"raw": "{\"winner\":{\n\t\"id\":1\n\t}, \n\t\"looser\":{\n\t\t\"id\":2\n\t}, \n\t\"winnerScore\":\"100\", \n\t\"looserScore\":\"2\"\n}"
 				},
 				"url": {
 					"raw": "http://localhost:8090/mbds/api/deadmatch",
@@ -1378,7 +1378,7 @@
 				],
 				"body": {},
 				"url": {
-					"raw": "http://localhost:8090/mbds/api/user/{{userId}}",
+					"raw": "http://localhost:8090/mbds/api/deadmatch/{{userId}}",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -1387,7 +1387,7 @@
 					"path": [
 						"mbds",
 						"api",
-						"user",
+						"deadmatch",
 						"{{userId}}"
 					]
 				}
@@ -1658,6 +1658,739 @@
 						"mbds",
 						"api",
 						"deadmatch",
+						"1000"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "valid message get id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e8adb622-c53e-49f1-8bba-fd68cd354f9d",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"response must be valid\", function () {",
+							"     // assert that the status code is 200",
+							"     pm.response.to.have.status(200); // info, success, redirection, clientError,  serverError,",
+							"});",
+							"",
+							"pm.test(\"response must have body\", function () {",
+							"     pm.response.to.be.withBody;",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "X-Auth-Token",
+						"value": " {{access_token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"username\":\"test3\", \"password\":\"newtest\"}"
+				},
+				"url": {
+					"raw": "localhost:8090/mbds/api/message/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"mbds",
+						"api",
+						"message",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "valid deadmatch get list Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4a75db6a-d2b4-43c0-906c-e184390267c6",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"response must be valid and have a body\", function () {",
+							"     // assert that the status code is 200",
+							"     pm.response.to.have.status(200); // info, success, redirection, clientError,  serverError,",
+							"});",
+							"",
+							"pm.test(\"response must have body\", function () {",
+							"     pm.response.to.be.withBody;",
+							"});",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "X-Auth-Token",
+						"value": " {{access_token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"username\":\"test3\", \"password\":\"newtest\"}"
+				},
+				"url": {
+					"raw": "localhost:8090/mbds/api/message",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"mbds",
+						"api",
+						"message"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "not valid message get (not existing message)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7f1ca713-ea87-45ee-9966-d1db96f023b9",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"response must be 404\", function () {",
+							"     // assert that the status code is 200",
+							"     pm.response.to.have.status(404); // info, success, redirection, clientError,  serverError,",
+							"});",
+							"",
+							"pm.test(\"response must have body\", function () {",
+							"     pm.response.to.be.withBody;",
+							"});",
+							"",
+							"pm.test(\"response must match the body\", function () {",
+							"     pm.expect(pm.response.text()).to.include(\"message not found\");",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "X-Auth-Token",
+						"value": " {{access_token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"username\":\"test3\", \"password\":\"newtest\"}"
+				},
+				"url": {
+					"raw": "localhost:8090/mbds/api/message/1000",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"mbds",
+						"api",
+						"message",
+						"1000"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "not valid message get (bad id)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a6a6bd7e-1546-4ac4-8ab8-19ea047684e4",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"response must be 404\", function () {",
+							"     // assert that the status code is 200",
+							"     pm.response.to.have.status(404); // info, success, redirection, clientError,  serverError,",
+							"});",
+							"",
+							"pm.test(\"response must have body\", function () {",
+							"     pm.response.to.be.withBody;",
+							"});",
+							"",
+							"pm.test(\"response must match the body\", function () {",
+							"     pm.expect(pm.response.text()).to.include(\"message not found\");",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "X-Auth-Token",
+						"value": " {{access_token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"username\":\"test3\", \"password\":\"newtest\"}"
+				},
+				"url": {
+					"raw": "localhost:8090/mbds/api/message/somethingWrong",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"mbds",
+						"api",
+						"message",
+						"somethingWrong"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "valid message post",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "25c5e9a2-2219-494b-a79e-f8674218cfcd",
+						"type": "text/javascript",
+						"exec": [
+							"id = pm.globals.set(\"userId\", responseBody.split(\"/\")[6]);",
+							"",
+							"pm.test(\"response must be valid\", function () {",
+							"     pm.response.to.have.status(201); ",
+							"});",
+							"",
+							"pm.test(\"response must have body\", function () {",
+							"     pm.response.to.be.withBody;",
+							"});",
+							"",
+							"pm.test(\"response must match the body\", function () {",
+							"     pm.expect(pm.response.text()).to.include(\"http://localhost:8090/mbds/api/message/\");",
+							"});"
+						]
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "d2cc1151-28ff-4b0f-a817-5309fcb01bf0",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "X-Auth-Token",
+						"value": " {{access_token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": " {\n    \"target\": {\n    \t\"id\": 2\n        },\n    \"content\": \"Hello\",\n    \"author\": {\n        \"id\": 1\n    }\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8090/mbds/api/message",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"mbds",
+						"api",
+						"message"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "not valid message post (missing champs)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "565dfa9e-1ada-4553-a07b-fc1b2ffff064",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"response must be 400 Bad Request\", function () {",
+							"     pm.response.to.have.status(400); ",
+							"});",
+							"",
+							"pm.test(\"response must have body\", function () {",
+							"     pm.response.to.be.withBody;",
+							"});",
+							"",
+							"pm.test(\"response must match the body\", function () {",
+							"     pm.expect(pm.response.text()).to.include(\"Failed to add message - not valid champs\");",
+							"});"
+						]
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "d2cc1151-28ff-4b0f-a817-5309fcb01bf0",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "X-Auth-Token",
+						"value": " {{access_token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": " {\n    \"content\": \"Hello\",\n    \"author\": {\n        \"id\": 1\n    }\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8090/mbds/api/message",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"mbds",
+						"api",
+						"message"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "not valid message  post (not existing user)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8c8f295c-8f07-4a4f-aa83-287144939a5e",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"response must be 400 Bad Request\", function () {",
+							"     pm.response.to.have.status(400); ",
+							"});",
+							"",
+							"pm.test(\"response must have body\", function () {",
+							"     pm.response.to.be.withBody;",
+							"});",
+							"",
+							"pm.test(\"response must match the body\", function () {",
+							"     pm.expect(pm.response.text()).to.include(\"Failed to add message - not valid champs\");",
+							"});"
+						]
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "d2cc1151-28ff-4b0f-a817-5309fcb01bf0",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "X-Auth-Token",
+						"value": " {{access_token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": " {\n    \"target\": {\n    \t\"id\": 2000\n        },\n    \"content\": \"Hello\",\n    \"author\": {\n        \"id\": 1\n    }\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8090/mbds/api/message",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"mbds",
+						"api",
+						"message"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "valid message delete",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ec2b83b0-7789-4492-b494-506565918ba1",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"response must be valid and have a body\", function () {",
+							"     // assert that the status code is 200",
+							"     pm.response.to.have.status(200); // info, success, redirection, clientError,  serverError,",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "X-Auth-Token",
+						"value": " {{access_token}}"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8090/mbds/api/message/{{userId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"mbds",
+						"api",
+						"message",
+						"{{userId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "not valid deadmatch delete (no id) Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "776c2f88-2f63-450a-a503-e9712516270d",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"response must be 400y\", function () {",
+							"     // assert that the status code is 200",
+							"     pm.response.to.have.status(400); // info, success, redirection, clientError,  serverError,",
+							"});",
+							"",
+							"pm.test(\"response must have body\", function () {",
+							"     pm.response.to.be.withBody;",
+							"});",
+							"",
+							"pm.test(\"response must match the body\", function () {",
+							"     pm.expect(pm.response.text()).to.include(\"for message delete/put use /api/message/{Your message ID}\");",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "X-Auth-Token",
+						"value": " {{access_token}}"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8090/mbds/api/message",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"mbds",
+						"api",
+						"message"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "not valid deadmatch delete (not existing deadmatch) Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c9204dfe-1cc5-420c-aee9-3f134b242f6f",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"response must be 404 User not found\", function () {",
+							"     pm.response.to.have.status(404);",
+							"});",
+							"",
+							"pm.test(\"response must have body\", function () {",
+							"     pm.response.to.be.withBody;",
+							"});",
+							"",
+							"pm.test(\"response must match the body\", function () {",
+							"     pm.expect(pm.response.text()).to.include(\"message not found\");",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "X-Auth-Token",
+						"value": " {{access_token}}"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8090/mbds/api/message/1000",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"mbds",
+						"api",
+						"message",
+						"1000"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "valid message put",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "34caa0a6-8084-4b25-bf2a-202eb01268cf",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"response must be valid and have a body\", function () {",
+							"     // assert that the status code is 200",
+							"     pm.response.to.have.status(200); // info, success, redirection, clientError,  serverError,",
+							"});",
+							"",
+							"pm.test(\"response must have body\", function () {",
+							"     pm.response.to.be.withBody;",
+							"});",
+							"",
+							"pm.test(\"response must match the body\", function () {",
+							"     pm.expect(pm.response.text()).to.include(\"http://localhost:8090/mbds/api/message/\");",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "X-Auth-Token",
+						"value": " {{access_token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"lu\":\"true\"}"
+				},
+				"url": {
+					"raw": "localhost:8090/mbds/api/message/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"mbds",
+						"api",
+						"message",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "not valid message put (no id)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2e7bf17e-3240-43ef-850f-597d828a9bff",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"response must be 400\", function () {",
+							"     // assert that the status code is 200",
+							"     pm.response.to.have.status(400); // info, success, redirection, clientError,  serverError,",
+							"});",
+							"",
+							"pm.test(\"response must have body\", function () {",
+							"     pm.response.to.be.withBody;",
+							"});",
+							"",
+							"pm.test(\"response must match the body\", function () {",
+							"     pm.expect(pm.response.text()).to.include(\"for message delete/put use /api/message/{Your message ID}\");",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "X-Auth-Token",
+						"value": " {{access_token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:8090/mbds/api/message",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"mbds",
+						"api",
+						"message"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "not valid message put (not existing user)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c50572ef-a14b-48ee-9091-357148c627b9",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"response must be 404\", function () {",
+							"     // assert that the status code is 200",
+							"     pm.response.to.have.status(404); // info, success, redirection, clientError,  serverError,",
+							"});",
+							"",
+							"pm.test(\"response must have body\", function () {",
+							"     pm.response.to.be.withBody;",
+							"});",
+							"",
+							"pm.test(\"response must match the body\", function () {",
+							"     pm.expect(pm.response.text()).to.include(\"message not found\");",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "X-Auth-Token",
+						"value": " {{access_token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:8090/mbds/api/message/1000",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"mbds",
+						"api",
+						"message",
 						"1000"
 					]
 				}
