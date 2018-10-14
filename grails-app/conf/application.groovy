@@ -34,7 +34,8 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
     [pattern: '/api/logout',     access: ['isAuthenticated()']],
     [pattern: '/api/user/**',    access: ['isAuthenticated()']],
 	[pattern: '/api/message/**', access: ['isAuthenticated()']],
-	[pattern: '/api/deadmatch/**',access: ['isAuthenticated()']]
+	[pattern: '/api/deadmatch/**',access: ['isAuthenticated()']],
+	[pattern: '/doc/**',          access: ['permitAll']]
 ]
 
 grails.plugin.springsecurity.filterChain.chainMap = [
