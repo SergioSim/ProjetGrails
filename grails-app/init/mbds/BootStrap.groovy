@@ -28,6 +28,9 @@ class BootStrap {
 
         new Message(author: user1, target: user2, content:"hello friend").save(flush: true, failOnError: true)
         new Message(author: user1, target: user2, content:"hello friend").save(flush: true, failOnError: true)
+
+        UserRole.create(user1,gamingRole)
+        UserRole.create(user2,gamingRole)
     }
     def destroy = {
     }
