@@ -56,8 +56,8 @@ class MessageController {
         respond messageService.get(id)
     }
 
-    def update(Message message) {
-        if (message == null) {
+    def update(Message theMessage) {
+        if (theMessage == null) {
             notFound()
             return
         }
