@@ -55,15 +55,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
     }, false);
 
-    var b = true;
-
     function messageShow(id) {
-        if(b){
+        let theclass = document.getElementById(id).className;
+        if(theclass == "aMessage"){
             document.getElementById(id).className = "aMessageNotHidden";
-            b = false;
-        }else{
-            document.getElementById(id).className = "aMessage";
-            b = true;
+            //envoyer
+            let xhr = new XMLHttpRequest();
+            xhr.open('GET', "http://localhost:8090/mbds/message/read/"+id, true);
+            xhr.send()
         }
-
     }

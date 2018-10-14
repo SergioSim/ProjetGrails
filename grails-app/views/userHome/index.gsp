@@ -8,7 +8,7 @@
     <asset:stylesheet src="userMessages.css"/>
 
 </head>
-<br>
+<body>
     <div>
         <content tag="nav">
             <li class="dropdown">
@@ -41,15 +41,20 @@
                         <div class="userMessage" onclick="messageShow(${theMessage.id})">
                             <p>Author : ${theMessage.author.username} Date : ${theMessage.dateCreated}</p>
                             <p>Click to show message!</p>
-                            <div class="aMessage" id="${theMessage.id}" >Message : ${theMessage.content}</div>
+                            <div class="aMessageNotHidden" >Message : ${theMessage.content}</div>
                         </div>
                      </g:each>
                 <p>Your Message inBox: ${theInBox}</p>
                     <g:each in="${theInBox}" var="theMessage">
                         <div class="userMessage" onclick="messageShow(${theMessage.id})">
                             <p>Author : ${theMessage.author.username} Date : ${theMessage.dateCreated}</p>
+                        <g:if test="${theMessage.lu}">
+                            <div class="aMessageNotHidden" id="${theMessage.id}">Message : ${theMessage.content}</div>
+                        </g:if>
+                        <g:else>
                             <p>Click to show message!</p>
-                            <div class="aMessage" id="${theMessage.id}" >Message : ${theMessage.content}</div>
+                            <div class="aMessage" id="${theMessage.id}">Message : ${theMessage.content}</div>
+                        </g:else>
                         </div>
                     </g:each>
 
